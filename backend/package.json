@@ -1,0 +1,16 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Groupomania social network backend",
+  "main": "server.js",
+  "scripts": {
+    "strart": "nodemon server.js"
+  },
+  "author": "Oumar MAURET",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "nodemon": "^2.0.15"
+  }
+}
