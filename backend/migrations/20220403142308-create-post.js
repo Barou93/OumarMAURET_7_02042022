@@ -8,7 +8,7 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      idUsers: {
+      userId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -18,11 +18,16 @@ module.exports = {
       },
       content: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+          isAlpha: true,
+          notEmpty: true,
+        }
       },
       comments: {
         allowNull: true,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+
       },
       attachment: {
         allowNull: true,

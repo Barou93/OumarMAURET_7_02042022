@@ -19,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Post.init({
-    idUsers: DataTypes.INTEGER,
     content: DataTypes.STRING,
     comments: DataTypes.STRING,
     attachment: DataTypes.STRING,
