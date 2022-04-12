@@ -9,14 +9,15 @@ const { RequestError, UserError } = require('../utils/errors.utils')
 module.exports.getAllUsers = async (req, res) => {
 
     //Select all user register in DB and print in the screen
-    const users = await User.findAll({
-
+    await User.findAll({
         //Exclude some attributes like password, createdAt and updatedAt
         attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
+    }).then((users) => {
+        res.status(200).json(users)
     })
-        .then(() => {
-            res.status(200).json(users)
-        }).catch(err => res.status(404).json(err))
+        .catch((err) => {
+            throw new Error(err)
+        })
 
 }
 

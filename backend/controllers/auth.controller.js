@@ -53,9 +53,7 @@ module.exports.signUp = async (req, res, next) => {
                     password: hash,
                     isAdmin: 0
                 })
-                res.status(201).json({ "user": user.id });
-
-
+                res.status(201).json({ user: user.id });
             })
 
     } catch (err) {
@@ -89,7 +87,7 @@ module.exports.signIn = async (req, res, next) => {
 
         const token = createToken(user.id);
         res.cookie('jwt', token, { httpOnly: true, maxAge })
-        res.status(200).json({ "user": user.id })
+        res.status(200).json({ userId: user.id, token })
 
 
 
