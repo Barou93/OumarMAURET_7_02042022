@@ -30,7 +30,7 @@ module.exports.createPost = async (req, res, next) => {
                 if (userTokenId) {
                     const post = Post.create(
                         { ...body, userId: userTokenId })
-                        .then(() => res.status(201).json(post))
+                        .then(() => res.status(201).json({ "post": post }))
                         .catch(err => res.status(404).json({ 'Impossible de publier ce contenu !': + err }))
 
                 }
@@ -42,6 +42,19 @@ module.exports.createPost = async (req, res, next) => {
 
         next(err);
     }
+}
+
+
+module.exports.readOnePost = async (req, res) => {
+    const { id } = req.params;
+    await Post.findByPk(id, {
+        attributes: {
+            exclude: ['createdAt', 'updatedAt']
+        }
+    }).then((post) => res.status(200).json(post))
+        .catch((err) => {
+            next(err)
+        })
 }
 
 

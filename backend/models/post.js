@@ -14,13 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       models.Post.belongsTo(models.User, {
         foreignKey: {
           allowNull: false,
-          name: "userId",
+
         }
       })
     }
   };
   Post.init({
-    userId: DataTypes.INTEGER,
     content: DataTypes.STRING,
     comments: DataTypes.STRING,
     attachment: DataTypes.STRING,

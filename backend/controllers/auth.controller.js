@@ -38,7 +38,7 @@ module.exports.signUp = async (req, res, next) => {
     }
     try {
 
-        let userfound = await User.findOne({ where: { email: email }, raw: true })
+        let userfound = await User.findOne({ where: { email: email, firstname: firstname }, raw: true })
         if (userfound !== null) {
             throw new UserError(`L'utilisateur ${firstname} existe déjà !`, 1)
         }
