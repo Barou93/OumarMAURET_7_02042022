@@ -5,7 +5,7 @@ const jwtAuth = require('jsonwebtoken');
 
 
 
-module.exports.readPost = async (req, res) => {
+module.exports.readPost = async (req, res, next) => {
     await Post.findAll({
         attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
 

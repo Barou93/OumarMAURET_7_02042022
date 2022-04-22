@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 const likeRoutes = require('./routes/likes.routes');
+const commentRoutes = require('./routes/comment.routes');
 const cors = require('cors')
 
 require('dotenv').config({ path: './config/.env' });
@@ -31,6 +32,7 @@ app.get('/jwtid', requireAuth, (req, res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/post', likeRoutes);
+app.use('/api/post', commentRoutes);
 
 
 //Eroors Middleware
