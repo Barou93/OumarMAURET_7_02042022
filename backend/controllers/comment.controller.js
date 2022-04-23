@@ -91,7 +91,6 @@ module.exports.editCommentPost = async (req, res, next) => {
             .then((commentFound) => {
                 if (!commentFound) return res.status(404).json('Ce commentaire est indisponible.')
                 if (commentFound.userId !== userFound.id) return res.status(401).json('Impossible de modifier ce commentaire.')
-                //return res.status(401).send("Vous ne pouvez pas modifier ce commentaire.")
                 Comment.update({ comments: comments }, {
                     where: { id: id }
                 }).then((updateComment) => {
