@@ -23,7 +23,7 @@ const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$
 
 module.exports.signUp = async (req, res, next) => {
     //Destructuring data is equivalent = firstname = req.body.firstname
-    const { firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, password, isAdmin } = req.body;
 
     if (!emailRegex.test(email))
         res.status(400).json({ 'msg': "Cet email est incorrect, reesayer SVP!" });
@@ -38,7 +38,7 @@ module.exports.signUp = async (req, res, next) => {
     }
     try {
 
-        let userfound = await User.findOne({ where: { email: email, firstname: firstname }, raw: true })
+        let userfound = await User.findOne({ where: { email: email, firstname: firstname, isAdmin }, raw: true })
         if (userfound !== null) {
             throw new UserError(`L'utilisateur ${firstname} existe déjà !`, 1)
         }
@@ -51,9 +51,11 @@ module.exports.signUp = async (req, res, next) => {
                     lastname,
                     email,
                     password: hash,
-                    isAdmin: 0
+                    isAdmin
                 })
-                res.status(201).json({ user: user.id });
+                res.status(201).json({ "user": user.id });
+                console.log(user.firstname); // 'alice123'
+                console.log(user.isAdmin);
             })
 
     } catch (err) {

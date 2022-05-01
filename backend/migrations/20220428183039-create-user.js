@@ -15,7 +15,7 @@ module.exports = {
       },
       lastname: {
         allowNull: false,
-        type: Sequelize.STRING,
+        type: Sequelize.STRING
       },
       email: {
         allowNull: false,
@@ -33,20 +33,20 @@ module.exports = {
       picture: {
         allowNull: true,
         type: Sequelize.STRING,
-        defaultValue: './uploads/profil/user.png'
-
+        defaultValue: '../frontend/public/uploads/profil/user.png'
       },
       bio: {
         allowNull: true,
+        type: Sequelize.STRING,
         validate: {
           len: [15, 380],
           notEmpty: true
         },
-        type: Sequelize.STRING
       },
       isAdmin: {
         allowNull: false,
-        type: Sequelize.BOOLEAN
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       createdAt: {
         allowNull: false,

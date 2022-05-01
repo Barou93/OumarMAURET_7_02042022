@@ -5,6 +5,8 @@ const User = models.User;
 
 const { RequestError, UserError } = require('../utils/errors.utils')
 
+
+
 //Getting All user iNFOS
 module.exports.getAllUsers = async (req, res) => {
 

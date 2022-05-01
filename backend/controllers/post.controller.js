@@ -2,12 +2,18 @@ const models = require('../models');
 
 const { User, Post } = models;
 const jwtAuth = require('jsonwebtoken');
+const fs = require('fs').promises;
+const path = require('path');
+
 
 
 
 module.exports.readPost = async (req, res, next) => {
     await Post.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
+        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+
+        //Filter data in descending order: Highlight the latest publications
+        order: [['createdAt', 'DESC']]
 
     }).then((posts) => res.status(200).json(posts))
         .catch((err) => {
@@ -16,29 +22,45 @@ module.exports.readPost = async (req, res, next) => {
 }
 
 module.exports.createPost = async (req, res, next) => {
+
     const token = req.cookies.jwt;
     const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);
     const userTokenId = decoded.id;
 
-
     try {
-        const { body } = req;
-        console.log(body);
+        const { content } = req.body;
+        console.log(content);
         await User.findOne({ where: { id: userTokenId } })
-            .then(() => {
+            .then((user) => {
+                let attachment;
+                const directory = "post";
 
-                if (userTokenId) {
-                    const post = Post.create(
-                        { ...body, userId: userTokenId })
-                        .then(() => res.status(201).json({ "post": post }))
-                        .catch(err => res.status(404).json({ 'Impossible de publier ce contenu !': + err }))
+                //req.file !== null ? `${req.protocol}://${req.get('host')}../frontend/public/uploads/${directory}/${req.file.filename}` : "",
+                if (user !== null) {
+                    if (req.file !== undefined) {
+                        attachment = `${req.protocol}://${req.get('host')}../frontend/public/uploads/${directory}/${req.file.filename}`
+                    } else {
+                        attachment = ""
+                    }
+                    if (content === "null" && attachment === "null") {
+                        return res.status(400).json('Ecrivez quelques choses à publier 😒')
+                    } else {
+                        const post = Post.create(
+                            {
+                                content,
+                                //Check if the post contains an image
+                                attachment,
+                                UserId: userTokenId
+                            })
+                            .then(() => res.status(201).json({ "post": post }))
+                            .catch(err => res.status(404).json({ 'Impossible de publier ce contenu !': + err }))
+                    }
 
                 }
             })
 
 
     } catch (err) {
-        //throw new Error(err)
 
         next(err);
     }
@@ -73,7 +95,9 @@ module.exports.updatePost = async (req, res, next) => {
     await Post.findByPk(id)
         .then((post) => {
             if (!post) throw new UserError("Ce contenu n'existe pas !", 0);
-            if (post.userId !== userFound.id) return res.status(401).json('Vous ne pouvez pas modifier cette publication.')
+
+            //If the UserId matches the one of the sauce delete of the db
+            if (post.UserId !== userFound.id || post.UserId !== userFound.isAdmin === true) return res.status(401).json('Vous ne pouvez pas modifier cette publication.')
             post.content = body.content;
             post.save()
                 .then(() => res.status(201).json(post))
@@ -85,33 +109,38 @@ module.exports.updatePost = async (req, res, next) => {
 
 module.exports.deletePost = async (req, res, next) => {
 
-    const token = req.cookies.jwt;
-    const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);
-    const userId = decoded.id;
+    try {
+        //Get the id of the user in the cookie token
+        const { id } = req.params;
+        const token = jwtAuth.verify(req.cookies.jwt, process.env.TOKEN_SECRET);
+        const user = await User.findByPk(token.id);
 
-    const { id } = req.params;
-
-    const user = await User.findByPk(userId);
-
-    await Post.findOne({
-        where: { id: id }
-    }).then((postUserFound) => {
-        if (!postUserFound) return res.status(404).json('Utilisateur non trouvé.');
-        if (postUserFound.userId !== user.id) return res.status(401).json('Vous ne pouvez pas supprimer cette publication.')
-
-        Post.destroy({ where: { id: id } })
-            .then((post) => {
-                if (post === 0) throw new RequestError("Ce contenu n'existe pas !")
-
-                res.status(200).json('Ce contenu a été suppirmé avec succès !')
-            })
-            .catch(err => {
-                next(err)
-            })
-    })
+        const post = await Post.findOne({ where: { id: id } });
 
 
+
+        if (!post) return res.status(404).json('Utilisateur non trouvé.');
+
+        //If the UserId matches the one of the sauce delete of the db
+        if (post.UserId !== (user.id || user.isAdmin == true)) return res.status(401).json('Vous ne pouvez pas supprimer cette publication.');
+
+
+        const result = await Post.destroy({ where: { id: post.id }, truncate: { cascade: false } });
+
+
+
+        if (result === 0) throw new RequestError("Ce contenu n'existe pas !")
+
+        const filename = post.attachment.split('../frontend/public/uploads/post/')[1];
+        const filepath = path.resolve(`../frontend/public/uploads/post/${filename}`)
+        await fs.unlink(filepath);
+
+
+
+
+        res.status(200).json('Ce contenu a été suppirmé avec succès !')
+    } catch (err) {
+        next(err);
+    }
 
 }
-
-

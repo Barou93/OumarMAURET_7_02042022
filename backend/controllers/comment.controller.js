@@ -2,7 +2,7 @@ const models = require('../models');
 
 const { User, Post, Comment } = models;
 const jwtAuth = require('jsonwebtoken');
-const { post } = require('../routes/comment.routes');
+
 
 
 module.exports.createCommentPost = async (req, res, next) => {

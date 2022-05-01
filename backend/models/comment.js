@@ -38,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Post',
         key: 'id'
-      }
+      },
+      onDelete: 'CASCADE',
     },
     userId: {
       type: DataTypes.INTEGER,
@@ -46,9 +47,10 @@ module.exports = (sequelize, DataTypes) => {
       key: 'id'
     },
     comments: DataTypes.STRING,
-  }, {
-    sequelize,
-    modelName: 'Comment',
-  });
+  },
+    {
+      sequelize,
+      modelName: 'Comment',
+    });
   return Comment;
 };

@@ -40,14 +40,14 @@ module.exports = (sequelize, DataTypes) => {
       references: {
         model: 'Post',
         key: 'id'
-      }
+      },
+
     },
     userId: {
       type: DataTypes.INTEGER,
       model: 'User',
       key: 'id'
     },
-   
   }, {
     sequelize,
     modelName: 'Like',

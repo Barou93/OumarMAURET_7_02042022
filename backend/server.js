@@ -5,6 +5,7 @@ const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 const likeRoutes = require('./routes/likes.routes');
 const commentRoutes = require('./routes/comment.routes');
+const path = require('path');
 const cors = require('cors')
 
 require('dotenv').config({ path: './config/.env' });
@@ -22,10 +23,15 @@ app.use(cors());
 //JWT TOKEN
 
 app.get('*', checkUser);
+
 app.get('/jwtid', requireAuth, (req, res) => {
     res.status(200).json(res.locals.user.id)
 })
 
+
+//Upload Images Path directory
+app.use('../frontend/public/uploads/post', express.static(path.join(__dirname, './frontend/public/uploads/post')));
+app.use('../frontend/public/uploads/profil', express.static(path.join(__dirname, './frontend/public/uploads/profil')));
 
 //Routes
 
@@ -35,8 +41,11 @@ app.use('/api/post', likeRoutes);
 app.use('/api/post', commentRoutes);
 
 
+
 //Eroors Middleware
 app.use(errorHandler)
+
+
 //Strating Server
 app.listen(process.env.PORT, () => {
     console.log(`Listenning on port ${process.env.PORT}`)
