@@ -3,6 +3,8 @@ const models = require('../models');
 //Select User models in models
 const User = models.User;
 
+
+//Errors utils
 const { RequestError, UserError } = require('../utils/errors.utils')
 
 

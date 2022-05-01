@@ -82,15 +82,15 @@ module.exports.editCommentPost = async (req, res, next) => {
     try {
 
         const post = await Post.findByPk(postId);
-        const userFound = await User.findByPk(userId)
+        const user = await User.findByPk(userId)
 
         await Comment.findOne({
             attributes: ["id", "userId", "postId"],
             where: { id }
         })
-            .then((commentFound) => {
-                if (!commentFound) return res.status(404).json('Ce commentaire est indisponible.')
-                if (commentFound.userId !== userFound.id) return res.status(401).json('Impossible de modifier ce commentaire.')
+            .then((comment) => {
+                if (!comment) return res.status(404).json('Ce commentaire est indisponible.')
+                if (comment.UserId !== user.id && comment.UserId !== user.isAdmin == false) return res.status(401).json('Impossible de modifier ce commentaire.')
                 Comment.update({ comments: comments }, {
                     where: { id: id }
                 }).then((updateComment) => {
@@ -132,9 +132,9 @@ module.exports.deleteCommentPost = async (req, res) => {
         await Comment.findOne({
             attributes: ["id", "userId", "postId"],
             where: { id }
-        }).then((deleteComment) => {
-            if (!deleteComment) return res.status(404).json('Ce commentaire est indisponible.')
-            if (deleteComment.userId !== user.id) return res.status(401).json('Impossible de supprimer ce commentaire.')
+        }).then((comment) => {
+            if (!comment) return res.status(404).json('Ce commentaire est indisponible.')
+            if (comment.UserId !== user.id && comment.UserId !== user.isAdmin == false) return res.status(401).json('Impossible de supprimer ce commentaire.')
 
             Comment.destroy({ where: { id: id } })
                 .then((comment) => {

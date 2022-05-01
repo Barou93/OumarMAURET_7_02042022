@@ -90,14 +90,14 @@ module.exports.updatePost = async (req, res, next) => {
     const { body } = req;
     console.log(req.params);
 
-    const userFound = await User.findByPk(userId);
+    const user = await User.findByPk(userId);
 
     await Post.findByPk(id)
         .then((post) => {
             if (!post) throw new UserError("Ce contenu n'existe pas !", 0);
 
             //If the UserId matches the one of the sauce delete of the db
-            if (post.UserId !== userFound.id || post.UserId !== userFound.isAdmin === true) return res.status(401).json('Vous ne pouvez pas modifier cette publication.')
+            if (post.UserId !== user.id && post.UserId !== user.isAdmin == false) return res.status(401).json('Vous ne pouvez pas modifier cette publication.')
             post.content = body.content;
             post.save()
                 .then(() => res.status(201).json(post))
@@ -122,7 +122,7 @@ module.exports.deletePost = async (req, res, next) => {
         if (!post) return res.status(404).json('Utilisateur non trouvé.');
 
         //If the UserId matches the one of the sauce delete of the db
-        if (post.UserId !== (user.id || user.isAdmin == true)) return res.status(401).json('Vous ne pouvez pas supprimer cette publication.');
+        if (post.UserId !== user.id && post.UserId !== user.isAdmin == false) return res.status(401).json('Vous ne pouvez pas supprimer cette publication.');
 
 
         const result = await Post.destroy({ where: { id: post.id }, truncate: { cascade: false } });

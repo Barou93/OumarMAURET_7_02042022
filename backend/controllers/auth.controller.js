@@ -98,6 +98,54 @@ module.exports.signIn = async (req, res, next) => {
     }
 }
 
+//Change User password 
+module.exports.changePassword = async (req, res) => {
+
+    const { email, newPassword, confirmNewPassword } = req.body;
+
+    if (newPassword !== confirmNewPassword) return res.status(409).json('Les deux mots de passe ne sont pas identiques.')
+
+    if (passwordRegex.test(newPassword) && passwordRegex.test(confirmNewPassword)) {
+
+        User.findOne({ where: { email: email } })
+            .then((user) => {
+                if (!user) {
+                    return res.status(404).json("Cet utilisateur n'existe pas sur ce site.")
+                }
+
+                if (user) {
+                    bcrypt.compare(newPassword, user.password, (errComparePass, resComparePass) => {
+                        //bcrypt renvoit resComparePassword si les mdp sont identiques donc aucun changement
+                        if (resComparePass) {
+                            res.status(400).json('Vous avez déjà utilisé ce mot de passe')
+                        } else {
+                            bcrypt.hash(newPassword, 10, (err, newHash) => {
+                                User.update({
+                                    password: newHash
+                                }, { where: { id: user.id } })
+                                    .then(() => res.status(200).json('Votre mot de passe a été modifié avec succès'))
+                                    .catch(() => res.status(500).json({ err }))
+                            })
+                        }
+                    })
+                } else {
+                    res.status(400).json({ "msg": "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial" });
+                }
+
+            })
+            .catch(err => {
+                return res.status(500).json(err)
+            })
+    }
+
+}
+
+
+
+
+
+
+
 //Disconnected User
 
 module.exports.logout = async (req, res) => {
