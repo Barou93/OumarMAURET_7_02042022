@@ -30,6 +30,14 @@ class AllErrors extends Error {
                 errorType == 0 ? this.statusCode = 404 : this.statusCode = 409;
                 break
 
+            case 'CommentError':
+                errorType == 0 ? this.statusCode = 404 : this.statusCode = 409;
+                break
+
+            case 'LikeError':
+                errorType == 0 ? this.statusCode = 404 : this.statusCode = 409;
+                break
+
             case 'RequestError':
                 this.statusCode = 400
                 break

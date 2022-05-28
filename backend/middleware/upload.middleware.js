@@ -10,7 +10,7 @@ const imageFilter = (req, file, cb) => {
     if (file.mimetype.startsWith("image")) {
         cb(null, true);
     } else {
-        cb("Veuillez télécharger uniquement des images.", false);
+        cb("Veuillez télécharger uniquement des images (jpeg,jpg, png & gif).", false);
     }
 };
 const storage = multer.diskStorage({

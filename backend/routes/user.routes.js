@@ -5,7 +5,6 @@ const uploadController = require('../controllers/upload.controller');
 const upload = require('../middleware/upload.middleware');
 
 
-
 //Authentification 
 router.post('/register', authController.signUp);
 router.post('/login', authController.signIn);

@@ -19,7 +19,7 @@ module.exports.likePost = async (req, res, next) => {
 
 
     try {
-        console.log(req.body)
+
         const post = await Post.findByPk(postId)
         if (!post) return res.status(404).json('Post not found.')
 
@@ -64,7 +64,7 @@ module.exports.disLikePost = async (req, res, next) => {
     const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);
     const userId = decoded.id;
 
-    console.log(userId);
+
 
     const postId = req.params.postId;
 

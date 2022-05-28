@@ -31,7 +31,7 @@ module.exports.signUp = async (req, res, next) => {
     if (!passwordRegex.test(password))
         res.status(400).json({ "msg": "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial" });
 
-    console.log(req.body);
+
 
     if (!firstname || !lastname || !email || !password) {
         throw new RequestError('Veuillez remplir les champs obligatoire SVP!')
@@ -42,7 +42,6 @@ module.exports.signUp = async (req, res, next) => {
         if (userfound !== null) {
             throw new UserError(`L'utilisateur ${firstname} existe déjà !`, 1)
         }
-
         //Encrypted password 
         bcrypt.hash(password, 10)
             .then(hash => {
@@ -54,8 +53,6 @@ module.exports.signUp = async (req, res, next) => {
                     isAdmin
                 })
                 res.status(201).json({ "user": user.id });
-                console.log(user.firstname); // 'alice123'
-                console.log(user.isAdmin);
             })
 
     } catch (err) {
@@ -71,7 +68,7 @@ module.exports.signIn = async (req, res, next) => {
         const { email, password } = req.body;
 
         if (!email && !password) {
-            throw new AuthentificationError('Mauvais emai ou mot de passe', 0)
+            throw new AuthentificationError('Mauvais email ou mot de passe', 0)
         }
 
         const user = await User.findOne({ where: { email }, raw: true });
@@ -98,11 +95,13 @@ module.exports.signIn = async (req, res, next) => {
     }
 }
 
+
 //Change User password 
 module.exports.changePassword = async (req, res) => {
 
     const { email, newPassword, confirmNewPassword } = req.body;
 
+    //Compare NewPassword and ConfirmNewPasswor have the same values
     if (newPassword !== confirmNewPassword) return res.status(409).json('Les deux mots de passe ne sont pas identiques.')
 
     if (passwordRegex.test(newPassword) && passwordRegex.test(confirmNewPassword)) {
@@ -123,27 +122,24 @@ module.exports.changePassword = async (req, res) => {
                                 User.update({
                                     password: newHash
                                 }, { where: { id: user.id } })
-                                    .then(() => res.status(200).json('Votre mot de passe a été modifié avec succès'))
+                                    .then(() => res.status(200).json('Votre mot de passe a été modifié avec succès 😎'))
                                     .catch(() => res.status(500).json({ err }))
                             })
                         }
                     })
                 } else {
-                    res.status(400).json({ "msg": "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial" });
+                    return res.status(404).json('Impossible de mettre à jour votre mot de passe')
                 }
 
             })
             .catch(err => {
                 return res.status(500).json(err)
             })
+    } else {
+        return res.status(400).json({ "msg": "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial" });
     }
 
 }
-
-
-
-
-
 
 
 //Disconnected User

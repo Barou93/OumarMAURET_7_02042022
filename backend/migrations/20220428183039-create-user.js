@@ -12,10 +12,16 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING,
         unique: true,
+        validate: {
+          len: [2, 255]
+        }
       },
       lastname: {
         allowNull: false,
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        validate: {
+          len: [2, 255]
+        }
       },
       email: {
         allowNull: false,
@@ -39,22 +45,31 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
         validate: {
-          len: [15, 380],
+          len: [8, 110],
           notEmpty: true
         },
-      },
-      isAdmin: {
-        allowNull: false,
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+        followers: {
+          allowNull: true,
+          type: Sequelize.INTEGER,
+        },
+        following: {
+          allowNull: true,
+          type: Sequelize.INTEGER,
+        },
+
+        isAdmin: {
+          allowNull: false,
+          type: Sequelize.BOOLEAN,
+          defaultValue: false,
+        },
+        createdAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        },
+        updatedAt: {
+          allowNull: false,
+          type: Sequelize.DATE
+        }
       }
     });
   },

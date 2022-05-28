@@ -6,8 +6,6 @@ const fs = require('fs').promises;
 const path = require('path');
 
 
-
-
 module.exports.readPost = async (req, res, next) => {
     await Post.findAll({
         attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
@@ -28,32 +26,41 @@ module.exports.createPost = async (req, res, next) => {
     const userTokenId = decoded.id;
 
     try {
-        const { content } = req.body;
+
+        let { content } = req.body;
         console.log(content);
         await User.findOne({ where: { id: userTokenId } })
-            .then((user) => {
-                let attachment;
+            .then(async (user) => {
+                let attachmentURL;
                 const directory = "post";
 
-                //req.file !== null ? `${req.protocol}://${req.get('host')}../frontend/public/uploads/${directory}/${req.file.filename}` : "",
+                //Check if the post contains an image
                 if (user !== null) {
-                    if (req.file !== undefined) {
-                        attachment = `${req.protocol}://${req.get('host')}../frontend/public/uploads/${directory}/${req.file.filename}`
-                    } else {
-                        attachment = ""
+                    if (req.file !== undefined || content != "") {
+                        attachmentURL = `${req.protocol}://${req.get('host')}../frontend/public/uploads/${directory}/${req.file.filename}`
                     }
-                    if (content === "null" && attachment === "null") {
+                    else {
+                        attachmentURL = ""
+                    }
+
+                    if ((content == "null" && attachmentURL == "null")) {
                         return res.status(400).json('Ecrivez quelques choses à publier 😒')
                     } else {
-                        const post = Post.create(
+                        await Post.create(
                             {
                                 content,
-                                //Check if the post contains an image
-                                attachment,
+                                attachment: attachmentURL,
                                 UserId: userTokenId
                             })
-                            .then(() => res.status(201).json({ "post": post }))
-                            .catch(err => res.status(404).json({ 'Impossible de publier ce contenu !': + err }))
+                            .then((post) => {
+                                if (post.content === "null") {
+                                    res.status(403).json('Merci de mettre une légende avant de publier')
+                                } else {
+                                    res.status(201).json({ "Votre contenu vient d'être publier 😊": post.content + post.attachment })
+                                }
+                                console.log(post)
+                            })
+                            .catch(err => res.status(400).json({ 'Impossible de publier ce contenu 😥!': + err }))
                     }
 
                 }
@@ -62,7 +69,7 @@ module.exports.createPost = async (req, res, next) => {
 
     } catch (err) {
 
-        next(err);
+        res.status(500).json(err)
     }
 }
 
@@ -88,7 +95,7 @@ module.exports.updatePost = async (req, res, next) => {
 
     const { id } = req.params;
     const { body } = req;
-    console.log(req.params);
+
 
     const user = await User.findByPk(userId);
 
@@ -96,8 +103,10 @@ module.exports.updatePost = async (req, res, next) => {
         .then((post) => {
             if (!post) throw new UserError("Ce contenu n'existe pas !", 0);
 
-            //If the UserId matches the one of the sauce delete of the db
-            if (post.UserId !== user.id && post.UserId !== user.isAdmin == false) return res.status(401).json('Vous ne pouvez pas modifier cette publication.')
+            //Check if the Userid is != of the UserId of the comment to delete and if the user is not Admin 
+            if (post.UserId !== user.id && post.UserId !== user.isAdmin == false)
+                return res.status(401).json('Vous ne pouvez pas modifier cette publication.😑')
+
             post.content = body.content;
             post.save()
                 .then(() => res.status(201).json(post))
@@ -117,28 +126,21 @@ module.exports.deletePost = async (req, res, next) => {
 
         const post = await Post.findOne({ where: { id: id } });
 
+        if (!post) return res.status(404).json('Utilisateur non trouvé.😥');
 
-
-        if (!post) return res.status(404).json('Utilisateur non trouvé.');
-
-        //If the UserId matches the one of the sauce delete of the db
-        if (post.UserId !== user.id && post.UserId !== user.isAdmin == false) return res.status(401).json('Vous ne pouvez pas supprimer cette publication.');
-
+        //Check if the Userid is != of the UserId of the comment to delete and if the user is not Admin 
+        if (post.UserId !== user.id && post.UserId !== user.isAdmin == false)
+            return res.status(401).json('Vous ne pouvez pas supprimer cette publication.😑');
 
         const result = await Post.destroy({ where: { id: post.id }, truncate: { cascade: false } });
 
-
-
-        if (result === 0) throw new RequestError("Ce contenu n'existe pas !")
+        if (result === 0) throw new RequestError("Ce contenu n'existe pas 😥!")
 
         const filename = post.attachment.split('../frontend/public/uploads/post/')[1];
         const filepath = path.resolve(`../frontend/public/uploads/post/${filename}`)
         await fs.unlink(filepath);
 
-
-
-
-        res.status(200).json('Ce contenu a été suppirmé avec succès !')
+        res.status(200).json('Ce contenu a été suppirmé avec succès 😊!')
     } catch (err) {
         next(err);
     }

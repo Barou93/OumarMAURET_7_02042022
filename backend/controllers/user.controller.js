@@ -20,7 +20,7 @@ module.exports.getAllUsers = async (req, res) => {
         res.status(200).json(users)
     })
         .catch((err) => {
-            throw new Error(err)
+            throw new RequestError("Nous avons rencontrer un problème merci de reessayer !", 0)
         })
 
 }
@@ -48,18 +48,23 @@ module.exports.userInfo = async (req, res, next) => {
 //Update User infos 
 
 module.exports.UpdateUser = async (req, res, next) => {
-    console.log(req.params.id);
+
 
     //Getting id and body values
     const { id } = req.params
     const { body } = req;
-    console.log(body)
 
+    const user = User.findOne({ where: { id: id } })
     //Update user input values
     await User.findByPk(id)
         .then(userupdate => {
 
-            if (!userupdate) res.status(404).json({ "msg": "Impossible de mettre à jour! " });
+            if (!userupdate)
+                UserError("Impossible de mettre à jour !", 0)
+
+            if (userupdate !== user.id && userupdate !== user.isAdmin == false)
+                return res.status(401).json('Impossible de modifier cet utlisateur.')
+
             if (userupdate === null) throw new UserError("Cet utilisateur n'existe pas !", 0)
 
             userupdate.bio = body.bio
@@ -76,10 +81,15 @@ module.exports.UpdateUser = async (req, res, next) => {
 module.exports.deleteUser = (req, res, next) => {
     //Getting User Id in the params
     const { id } = req.params;
+    const user = User.findOne({ where: { id: id } })
 
     // Delete user by Id
     User.destroy({ where: { id: id } })
+
         .then((userdelete) => {
+            if (userdelete !== user.id && userdelete !== user.isAdmin == false)
+                return res.status(401).json('Impossible de modifier cet utlisateur.')
+
             if (userdelete === 0) throw new RequestError("Cet utilisateur n'existe pas !")
             res.status(200).json({ 'message': 'Compte supprimé avec succès' })
         })
