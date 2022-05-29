@@ -53,9 +53,10 @@ module.exports.signUp = async (req, res, next) => {
                     password: hash,
                     isAdmin
                 })
-                res.status(201).json({ "user": user.id });
-                console.log(user.firstname); // 'alice123'
-                console.log(user.isAdmin);
+                res.status(201).json({
+                    user: "Votre compte a été créer avec succès😎"
+                });
+
             })
 
     } catch (err) {
