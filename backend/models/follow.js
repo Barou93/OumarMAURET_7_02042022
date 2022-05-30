@@ -10,16 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      // define association hereMany
       models.Follow.belongsTo(models.User, {
-        as: 'follower',
+        as: 'followers',
         foreignKey: 'followerId',
+        onDelete: 'CASCADE'
       });
 
       models.Follow.belongsTo(models.User, {
         as: 'following',
         foreignKey: 'followingId',
-
+        onDelete: 'CASCADE'
       });
     }
   };

@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const followController = require('./controllers/follow.controller');
+const followController = require('../controllers/follow.controller');
 
 
 router.patch('/follow/:id', followController.follow);

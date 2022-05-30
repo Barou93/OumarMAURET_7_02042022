@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.User.hasMany(models.Post);
       models.User.hasMany(models.Message);
-      models.User.hasMany(models.Follow);
+      models.User.hasMany(models.Follow)
     }
   };
   User.init({
@@ -21,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
     lastname: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
+    followers: DataTypes.INTEGER,
+    following: DataTypes.INTEGER,
     picture: DataTypes.STRING,
     bio: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN
