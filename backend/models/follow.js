@@ -11,22 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association hereMany
-      models.Follow.belongsTo(models.User, {
-        as: 'followers',
-        foreignKey: 'followerId',
-        onDelete: 'CASCADE'
-      });
 
-      models.Follow.belongsTo(models.User, {
-        as: 'following',
-        foreignKey: 'followingId',
-        onDelete: 'CASCADE'
-      });
     }
   };
   Follow.init({
-    followerId: DataTypes.INTEGER,
-    followingId: DataTypes.INTEGER,
+
+    followerId: {
+      type: DataTypes.INTEGER,
+      model: 'User',
+      key: 'id'
+    },
+    followingId: {
+      type: DataTypes.INTEGER,
+      model: 'User',
+      key: 'id'
+    },
 
   }, {
     sequelize,

@@ -4,67 +4,100 @@ const models = require('../models');
 const { Follow, User } = models;
 
 
-
-
-module.exports.follow = async (req, res, next) => {
-
-
-    //Récupérer l'id dans les params
-    const { id } = req.params
-
-    const { followerId, followingId } = req.body;
-
+module.exports.follow = async (req, res) => {
 
     try {
+        //Récupérer l'id dans les params
 
-        const user = await User.findByPk(id);
+        const { id } = req.params;
+        const follower = await User.findByPk(id);
 
+        const { followerId } = req.body
 
+        const currentUser = await Follow.findOne({
+            where: { followerId: follower.id, followingId: followerId }
+        })
+        //console.log(currentUser.id);
 
-        if (user.id)
+        //If params id is the same as the id of the req.body 
+        if (follower.id === req.body.followerId) {
 
+            return res.status(403).json("Vous pouvez pas vous suivre")
+        }
+
+        //Check if the id of the req.body is not already available in db
+
+        if (!currentUser) {
             await Follow.create({
-                followerId: user.id,
+                followerId: follower.id,
                 followingId: req.body.followerId
+
+            }).then(() => {
+                return res.status(200).json({
+                    msg: `Vous venez de suivre ce collaborateur id:${followingId}`,
+                })
+            }).catch(err => {
+                return res.status(400).json('Impossible de faire cette demande ' + err)
             })
-                .then(async (userIdToFollow) => {
-                    if (userIdToFollow) {
 
-                        //Prevent the user from subscribing to himself
-                        if (user.id === req.body.followerId) {
-                            return res.status(401).json('Vous ne pouvez pas vous suivre😣');
-                        }
-
-
-                        if (followerId === undefined || followerId === "string") {
-                            return res.status(400).json("Vous n'êtes pas authoriser à faire cette opération")
-                        }
-                        //Push follower/following to user table
-                        await User.update(
-                            { following: req.body.followerId },
-                            { where: { id: user.id } })
-                            .then((userIsFollow) => {
-                                if (!userIsFollow) return res.status(404).json('Impossible de suivre ce utilisateur');
-                                else return res.status(201).json({ "Vous venez de suivre : ": user.firstname + user.lastname })
-                            });
-
-                        await User.update(
-                            { followers: user.id }, { where: { id: followerId } })
-                            .then((userIsFollowing) => {
-                                if (!userIsFollowing) return res.status(404).json("Impossible de trouver cet abonné")
-                                else next();
-                            })
-                    }
-                }).catch(err => res.status(400).json("Une erreur est intervenue merci de reesayer plutard" + err))
+        } else {
+            return res.status(403).json('Vous suivez déjà ce collaborateur')
+        }
 
     } catch (err) {
-        return res.status(500).json("err" + err)
+        return res.status(500).json("ERR" + err)
     }
-
 }
+
+
 
 module.exports.unfollow = async (req, res) => {
 
+    try {
+        //Récupérer l'id dans les params
 
+        const { id } = req.params;
+        const follower = await User.findByPk(id);
+
+
+        const { followerId } = req.body
+
+        const currentUser = await Follow.findOne({
+            where: { followerId: follower.id, followingId: followerId }
+        })
+        //console.log(currentUser.id);
+
+        //If params id is the same as the id of the req.body 
+        if (follower.id === req.body.followerId) {
+
+            return res.status(403).json("Vous pouvez pas vous desabonnez à vous même")
+        }
+
+        //Check if the id of the req.body is not already available in db
+
+        if (currentUser) {
+            await Follow.destroy({
+
+                where: {
+                    followerId: follower.id,
+                    followingId: req.body.followerId,
+                    id
+                }
+
+            }).then(() => {
+                return res.status(200).json({
+                    msg: `Vous ne suivez plus user id:${followerId}`,
+                })
+            }).catch(err => {
+                return res.status(400).json('Impossible de faire cette demande ' + err)
+            })
+
+        } else {
+            return res.status(403).json('Vous êtes déjà désabonner à ce collaborateur')
+        }
+
+    } catch (err) {
+        return res.status(500).json("ERR" + err)
+    }
 
 }
