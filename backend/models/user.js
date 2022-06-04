@@ -13,7 +13,23 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       models.User.hasMany(models.Post);
       models.User.hasMany(models.Message);
+<<<<<<< HEAD
       models.User.hasMany(models.Follow);
+=======
+      models.User.belongsToMany(models.User, {
+        foreignKey: 'followerId',
+        as: 'follower',
+        through: models.Follow
+      });
+      models.User.belongsToMany(models.User, {
+        foreignKey: 'followingId',
+        as: 'following',
+        through: models.Follow
+      });
+      models.User.hasMany(models.Forum);
+      models.User.hasMany(models.ForumMember);
+      models.User.hasMany(models.ForumMessage);
+>>>>>>> feature/followsFeature
     }
   };
   User.init({

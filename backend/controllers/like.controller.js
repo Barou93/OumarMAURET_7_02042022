@@ -45,8 +45,6 @@ module.exports.likePost = async (req, res, next) => {
                     likes: post.likes + 1
                 })
                 return res.status(201).json('Vous avez aimer cette publication.')
-            } else {
-
             }
         }).catch((err) => res.status(500).json("Cannot update like in the post." + err))
 

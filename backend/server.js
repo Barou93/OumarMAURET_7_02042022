@@ -5,6 +5,7 @@ const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 const likeRoutes = require('./routes/likes.routes');
 const commentRoutes = require('./routes/comment.routes');
+const followRoutes = require('./routes/follow.routes');
 const path = require('path');
 const cors = require('cors')
 
@@ -45,6 +46,7 @@ app.use('../frontend/public/uploads/profil', express.static(path.join(__dirname,
 //Routes
 
 app.use('/api/user', userRoutes);
+app.use('/api/user', followRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/post', likeRoutes);
 app.use('/api/post', commentRoutes);

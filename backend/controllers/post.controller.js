@@ -8,7 +8,7 @@ const path = require('path');
 
 module.exports.readPost = async (req, res, next) => {
     await Post.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] },
+        attributes: { exclude: ['createdAt', 'updatedAt'] },
 
         //Filter data in descending order: Highlight the latest publications
         order: [['createdAt', 'DESC']]

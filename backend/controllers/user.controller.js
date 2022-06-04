@@ -15,6 +15,7 @@ module.exports.getAllUsers = async (req, res) => {
     //Select all user register in DB and print in the screen
     await User.findAll({
         //Exclude some attributes like password, createdAt and updatedAt
+        include: ['follower', 'following'],
         attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
     }).then((users) => {
         res.status(200).json(users)
