@@ -8,6 +8,8 @@ const commentRoutes = require('./routes/comment.routes');
 const followRoutes = require('./routes/follow.routes');
 const path = require('path');
 const cors = require('cors')
+const socketIo = require('socket.io');
+const http = require('http');
 
 require('dotenv').config({ path: './config/.env' });
 const { checkUser, requireAuth } = require('./middleware/auth.middleware');
@@ -15,6 +17,8 @@ const errorHandler = require('./utils/errorsHandler.utils');
 
 
 const app = express();
+const server = http.createServer(app);
+const io = socketIo(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -56,8 +60,13 @@ app.use('/api/post', commentRoutes);
 //Eroors Middleware
 app.use(errorHandler)
 
+//Strating WebSocket Server
+
+io.on('connection', () => {
+    console.log('New Websocket connection')
+})
 
 //Strating Server
-app.listen(process.env.PORT, () => {
+server.listen(process.env.PORT, () => {
     console.log(`Listenning on port ${process.env.PORT}`)
 })

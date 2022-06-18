@@ -3,7 +3,7 @@ const models = require('../models');
 //Select User models in models
 const User = models.User;
 
-
+const Follow = models.Follow;
 //Errors utils
 const { RequestError, UserError } = require('../utils/errors.utils')
 
@@ -12,11 +12,27 @@ const { RequestError, UserError } = require('../utils/errors.utils')
 //Getting All user iNFOS
 module.exports.getAllUsers = async (req, res) => {
 
+
+
     //Select all user register in DB and print in the screen
     await User.findAll({
         //Exclude some attributes like password, createdAt and updatedAt
-        include: ['follower', 'following'],
-        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
+        include: [
+            {
+                model: User,
+                as: 'followers',
+                attributes: { exclude: ['password'] }
+
+            },
+            {
+                model: User,
+                as: 'followings',
+                attributes: { exclude: ['password'] }
+
+            },
+        ],
+        attributes: { exclude: ['createdAt', 'updatedAt', 'password',] }
+
     }).then((users) => {
         res.status(200).json(users)
     })
@@ -32,6 +48,7 @@ module.exports.userInfo = async (req, res, next) => {
     //Store ID in the req.params
     const { id } = req.params;
     await User.findByPk(id, {
+
         //Exclude some attributes like password, createdAt and updatedAt
         attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
     })
