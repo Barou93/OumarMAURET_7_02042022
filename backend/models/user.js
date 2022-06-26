@@ -12,7 +12,15 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.User.hasMany(models.Post);
-      models.User.hasMany(models.Message);
+      models.User.hasMany(models.Message, {
+        onDelete: 'CASCADE',
+        as: 'user',
+        foreignKey: 'senderId',
+        targetKey: 'id',
+
+      });
+
+
       models.User.belongsToMany(models.User, {
         foreignKey: 'followerId',
         as: 'followers',

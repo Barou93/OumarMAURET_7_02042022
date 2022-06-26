@@ -18,8 +18,8 @@ module.exports.checkUser = (req, res, next) => {
             } else {
                 //console.log("decodedToken:" + decodedToken.id)
                 let user = await User.findByPk(decodedToken.id);
-                res.locals.user = user;
-                //console.log(res.locals.user)
+                req.user = user;
+                console.log(req.user)
                 next();
             }
         })
