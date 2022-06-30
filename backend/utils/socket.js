@@ -17,7 +17,10 @@ const socketEvents = (io) => {
 
     io.on('connection', (socket) => {
         console.log(`Un utilisateur est connecté Id:${socket.id} `);
-        console.log(socket.handshake.auth)
+
+        socket.emit('newmessage', (message) => {
+
+        })
 
     });
 

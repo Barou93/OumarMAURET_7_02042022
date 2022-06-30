@@ -121,7 +121,7 @@ module.exports.deleteUser = (req, res, next) => {
     User.destroy({ where: { id: id } })
 
         .then((userdelete) => {
-            if (userdelete !== user.id && userdelete !== user.isAdmin == false)
+            if (userdelete !== user.id && user.isAdmin == false)
                 return res.status(401).json('Impossible de modifier cet utlisateur.')
 
             if (userdelete === 0) throw new RequestError("Cet utilisateur n'existe pas !")
