@@ -69,8 +69,27 @@
 </body>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-    var socket = io();
-    socket.emit('newMessage')
+    const input = document.getElementById('input');
+    const messages = document.getElementById('messages');
+    const form = document.getElementById('form');
+    const socket = io();
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (input.value) {
+            socket.emit('chat-message', input.value);
+            input.value = "";
+        }
+    });
+
+    socket.on('chat-message', function (chatMessage) {
+        const item = document.createElement('li');
+        item.textContent = chatMessage;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+    });
+
+
 </script>
 
 </html>

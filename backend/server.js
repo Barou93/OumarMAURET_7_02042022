@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const path = require('path');
 const cors = require('cors')
-const socketIo = require('socket.io');
+const { Server } = require('socket.io');
 const http = require('http');
-//const route = require('./routes')
-//Routes Controllers 
+
+
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 const likeRoutes = require('./routes/likes.routes');
@@ -24,9 +24,8 @@ const errorHandler = require('./utils/errorsHandler.utils');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
-const socketEvents = require('./utils/socket');
-socketEvents(io);
+const io = new Server(server);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -50,7 +49,7 @@ app.get('/jwtid', requireAuth, (req, res) => {
     res.status(200).json(res.locals.user.id)
 })
 
-//Use Socket Io in all folders
+//Use Socket
 
 app.use((req, res, next) => {
     res.io = io;

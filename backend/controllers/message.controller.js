@@ -3,7 +3,7 @@ const models = require('../models');
 const { Message, User, Conversation } = models;
 const { Op } = require('sequelize');
 const jwtAuth = require('jsonwebtoken');
-const user = require('../models/user');
+
 
 /**
  * 
@@ -16,6 +16,7 @@ module.exports.createMessage = async (req, res) => {
     const token = req.cookies.jwt;
     const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);
     const userId = decoded.id;
+
 
     try {
         const senderId = userId;
@@ -47,9 +48,10 @@ module.exports.createMessage = async (req, res) => {
         //Store messages field in variable
         const messages = { senderId, message, conversationId: conversationId || conversation.id }
 
-        await Message.create(messages).then((newMessage) => {
-            return res.status(201).json(newMessage)
-        })
+        const newMessage = await Message.create(messages);
+
+        res.io.emit('new-message', newMessage);
+        return res.status(201).json(newMessage);
 
 
     } catch (err) {
@@ -59,6 +61,7 @@ module.exports.createMessage = async (req, res) => {
 }
 
 module.exports.sendMessage = async (req, res) => {
+    //Getting user token
     const token = req.cookies.jwt;
     const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);
     const userId = decoded.id;
@@ -68,6 +71,8 @@ module.exports.sendMessage = async (req, res) => {
         const conversationId = parseInt(req.params.id);
         console.log(conversationId)
         const { message } = req.body;
+
+
 
         if (!currentUser) return res.status(404).json(' Utilisateur non trouvé');
 
@@ -83,15 +88,18 @@ module.exports.sendMessage = async (req, res) => {
 
         if (!conversation) return res.status(404).json('Cette conversation est indisponible')
 
-        console.log(conversation.toJSON());
+        //console.log(conversation.toJSON());
         if (conversation) {
-            await Message.create({
+            const chatMessage = await Message.create({
                 senderId: currentUser,
                 message,
                 conversationId
-            }).then((addMessage) => {
-                res.status(200).json(addMessage);
-            })
+            });
+
+            //Store chatMessage in socket IO
+            res.io.emit('chat-message', chatMessage);
+            res.status(200).json(chatMessage.toJSON());
+
         }
     } catch (err) {
         res.status(500).json("msg: " + err.message)
@@ -100,47 +108,47 @@ module.exports.sendMessage = async (req, res) => {
 
 }
 
-module.exports.currentMessage = async (req, res) => {
+//Update isRead values in Db
+module.exports.readMessage = async (req, res, next) => {
     const token = req.cookies.jwt;
     const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);
     const userId = decoded.id;
 
     try {
         const currentUser = userId;
-        const conversationId = req.params.id;
+        const conversationId = parseInt(req.params.id);
+        console.log(conversationId);
 
 
         if (!conversationId) return res.status(404).json("Cette conversation n'est plus disponible");
+
         const conversation = await Conversation.findOne({
             where: { id: conversationId },
             attributes: ['id'],
-            include: [
-                {
-                    model: Message,
-                    as: 'messages'
-                },
-
-            ],
-            order: [['createdAt', 'DESC']],
-
+            include: [{ model: Message }],
+            order: [[Message, 'createdAt', 'DESC']],
         });
-        const lastMessage = conversation ? conversation.toJSON().messages[0] : res.status(403).json("Impossible d'afficher le dernier message");
 
-        if (lastMessage.senderId === currentUser.id) {
-            return res.status(403).json('Vous avez déjà envoyé ce message')
-        }
+
+        const lastMessage = conversation ? conversation.toJSON() : res.status(404).json("Impossible d'afficher le dernier message");
+
+        console.log(conversationId, currentUser.id)
+
+        /*if (lastMessage.senderId === currentUser.id) {
+            return res.sendStatus(403);
+        }*/
         await Message.update({ isRead: true }, {
             where: {
                 isRead: false,
                 conversationId
             }
-        }).then((message => {
-            return res.status(204).json(message)
-        }))
+        })
+
+        return res.sendStatus(204);
 
 
     } catch (err) {
-        return res.status(500).json(err.message);
+        next(err);
 
     }
 
@@ -155,7 +163,7 @@ module.exports.getMessages = async (req, res) => {
     try {
         const users = userId;
 
-        if (!user) return res.status(404).json('Utilisateur non  trouvé');
+        if (!users) return res.status(404).json('Utilisateur non  trouvé');
 
         const conversations = await Conversation.findAll({
             where: {
@@ -165,30 +173,21 @@ module.exports.getMessages = async (req, res) => {
                 },
             },
             attributes: ['id'],
-            order: [[Message, 'createdAt', 'ASC']],
-            include: [
-                { model: Message },
+            order: [['createdAt', 'ASC']],
+            include: [{ model: Message },
 
-                {
-                    model: User,
-                    as: 'senderUser',
-
-
-
-                    attributes: ['firstname', 'lastname', 'picture'],
-
-                    required: false
-                },
-                {
-                    model: User,
-                    as: 'recipient',
-
-
-
-                    attributes: ['firstname', 'lastname', 'picture'],
-
-                    required: false
-                },
+            {
+                model: User,
+                as: 'senderUser',
+                attributes: ['firstname', 'lastname', 'picture'],
+                required: false
+            },
+            {
+                model: User,
+                as: 'recipient',
+                attributes: ['firstname', 'lastname', 'picture'],
+                required: false
+            },
             ]
         }
         )
@@ -201,7 +200,7 @@ module.exports.getMessages = async (req, res) => {
             conversations[i] = message;
 
         }
-        console.log(conversations)
+
 
         return res.status(200).json(conversations)
 
