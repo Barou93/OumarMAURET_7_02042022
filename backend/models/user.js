@@ -12,7 +12,14 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       models.User.hasMany(models.Post);
-      models.User.hasMany(models.Message);
+
+      models.User.hasMany(models.Conversation, {
+        foreignKey: 'sender'
+      });
+      models.User.hasMany(models.Conversation, {
+        foreignKey: 'receiver'
+      });
+
       models.User.belongsToMany(models.User, {
         foreignKey: 'followerId',
         as: 'followers',

@@ -1,15 +1,21 @@
+//Dependances
 const express = require('express');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const path = require('path');
+const cors = require('cors')
+const { Server } = require('socket.io');
+const http = require('http');
+
+
 const userRoutes = require('./routes/user.routes');
 const postRoutes = require('./routes/post.routes');
 const likeRoutes = require('./routes/likes.routes');
 const commentRoutes = require('./routes/comment.routes');
 const followRoutes = require('./routes/follow.routes');
-const path = require('path');
-const cors = require('cors')
-const socketIo = require('socket.io');
-const http = require('http');
+const messageRoutes = require('./routes/message.routes');
+
+
 
 require('dotenv').config({ path: './config/.env' });
 const { checkUser, requireAuth } = require('./middleware/auth.middleware');
@@ -18,7 +24,8 @@ const errorHandler = require('./utils/errorsHandler.utils');
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
+const io = new Server(server);
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,7 +39,7 @@ const corsOptions = {
     'preflightContinue': false
 
 }
-app.use(cors());
+app.use(cors(corsOptions));
 
 //JWT TOKEN
 
@@ -40,6 +47,13 @@ app.get('*', checkUser);
 
 app.get('/jwtid', requireAuth, (req, res) => {
     res.status(200).json(res.locals.user.id)
+})
+
+//Use Socket
+
+app.use((req, res, next) => {
+    res.io = io;
+    next();
 })
 
 
@@ -54,17 +68,18 @@ app.use('/api/user', followRoutes);
 app.use('/api/post', postRoutes);
 app.use('/api/post', likeRoutes);
 app.use('/api/post', commentRoutes);
+app.use('/api/message/', messageRoutes);
 
+app.use('/', (req, res) => {
+
+    res.sendFile(__dirname + '/index.html');
+
+})
 
 
 //Eroors Middleware
 app.use(errorHandler)
 
-//Strating WebSocket Server
-
-io.on('connection', () => {
-    console.log('New Websocket connection')
-})
 
 //Strating Server
 server.listen(process.env.PORT, () => {

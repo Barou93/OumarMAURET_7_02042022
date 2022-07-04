@@ -8,15 +8,17 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      senderId: {
+      conversationId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Users',
+          model: 'Conversations',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE'
+
       },
-      receiverId: {
+      senderId: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
@@ -27,6 +29,11 @@ module.exports = {
       message: {
         allowNull: false,
         type: Sequelize.STRING
+      },
+      isRead: {
+        allowNull: true,
+        type: Sequelize.BOOLEAN,
+        defaultValue: false
       },
       createdAt: {
         allowNull: false,
