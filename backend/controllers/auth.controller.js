@@ -52,6 +52,7 @@ module.exports.signUp = async (req, res, next) => {
                     password: hash,
                     isAdmin
                 })
+
                 res.status(201).json({ "user": user.id });
             })
 

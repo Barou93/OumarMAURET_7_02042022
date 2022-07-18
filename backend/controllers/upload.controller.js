@@ -7,6 +7,7 @@ module.exports.uploadProfil = async (req, res) => {
     const { id } = req.params
     try {
         console.log(req.file);
+
         if (req.file == undefined) {
             return res.send(`Vous devez sélectionner un fichier.`);
         }

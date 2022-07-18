@@ -30,9 +30,22 @@ module.exports = (sequelize, DataTypes) => {
         as: 'followings',
         through: models.Follow
       });
-      models.User.hasMany(models.Forum);
-      models.User.hasMany(models.ForumMember);
-      models.User.hasMany(models.ForumMessage);
+
+      models.User.belongsToMany(models.Forum, {
+        through: models.ForumMember,
+        foreignKey: 'userId',
+        otherKey: 'forumId',
+        as: 'members'
+
+      });
+
+      models.Forum.belongsToMany(models.User, {
+        through: models.ForumMessage,
+        foreignKey: 'forumId',
+        otherKey: 'userId',
+        as: 'parrticipants',
+      });
+      //models.User.hasMany(models.ForumMessage);
     }
   };
   User.init({

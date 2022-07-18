@@ -11,31 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.User.belongsToMany(models.Forum, {
-        through: models.ForumMessage,
-        foreignKey: 'userId',
-        otherKey: 'forumId',
-      });
 
-      models.Forum.belongsToMany(models.User, {
-        through: models.ForumMessage,
-        foreignKey: 'forumId',
-        otherKey: 'userId',
-      });
-
-      models.ForumMessage.belongsTo(models.Forum, {
-        as: 'forum',
-        foreignKey: 'forumId'
-      });
-      models.ForumMessage.belongsTo(models.User, {
-        as: 'user',
-        foreignKey: 'userId'
-      })
     }
   };
   ForumMessage.init({
-    forumId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
+    forumId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'Forum',
+        key: 'id'
+      },
+      onDelete: 'CASCADE',
+
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'User',
+        key: 'id',
+      },
+    },
     message: DataTypes.STRING
   }, {
     sequelize,

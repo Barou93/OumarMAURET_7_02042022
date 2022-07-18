@@ -14,6 +14,7 @@ const likeRoutes = require('./routes/likes.routes');
 const commentRoutes = require('./routes/comment.routes');
 const followRoutes = require('./routes/follow.routes');
 const messageRoutes = require('./routes/message.routes');
+const groupRoutes = require('./routes/group.routes');
 
 
 
@@ -69,6 +70,7 @@ app.use('/api/post', postRoutes);
 app.use('/api/post', likeRoutes);
 app.use('/api/post', commentRoutes);
 app.use('/api/message/', messageRoutes);
+app.use('/api/group/', groupRoutes);
 
 app.use('/', (req, res) => {
 

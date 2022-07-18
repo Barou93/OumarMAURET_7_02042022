@@ -14,7 +14,7 @@ module.exports.checkUser = (req, res, next) => {
             if (err) {
                 res.locals.user = null;
                 res.cookie('jwt', '', { maxAge: 1 });
-                next();
+                next(err.message);
             } else {
                 //console.log("decodedToken:" + decodedToken.id)
                 let user = await User.findByPk(decodedToken.id);
@@ -37,7 +37,7 @@ module.exports.requireAuth = (req, res, next) => {
         //Verify the token of the user 
         jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
             if (err) {
-                console.log(err)
+                console.log(err.message)
             } else {
                 //console.log(decodedToken.id);
                 next();

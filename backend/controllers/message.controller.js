@@ -244,8 +244,6 @@ module.exports.deleteMessage = async (req, res) => {
     })
     return res.status(200).json({ "Ce message a été supprimé avec succès": deleteMessage })
 
-
-
 }
 
 

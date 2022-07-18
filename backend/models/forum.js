@@ -11,18 +11,26 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      models.Forum.belongsTo(models.User, {
-        foreignKey: {
-          allowNull: false
-        }
-      })
+
+      models.Forum.belongsToMany(models.User, {
+        through: models.ForumMember,
+        foreignKey: 'forumId',
+        otherKey: 'userId',
+        as: 'groups'
+      });
+      models.User.belongsToMany(models.Forum, {
+        through: models.ForumMessage,
+        foreignKey: 'userId',
+        otherKey: 'forumId',
+        as: 'forums',
+      });
     }
   };
   Forum.init({
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     picture: DataTypes.STRING,
-    create_by_userId: DataTypes.INTEGER
+    createByUserId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Forum',

@@ -3,9 +3,7 @@ const models = require('../models');
 const { User, Post, Like } = models;
 const jwtAuth = require('jsonwebtoken');
 
-//Constant to update user Likes and Unlikes
-const LIKED = 1;
-const DISLIKED = 0;
+
 
 module.exports.likePost = async (req, res, next) => {
 

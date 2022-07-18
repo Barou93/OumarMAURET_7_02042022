@@ -14,7 +14,9 @@ module.exports = {
         references: {
           model: 'Forums',
           key: 'id'
-        }
+        },
+        onDelete: 'CASCADE',
+
       },
       userId: {
         allowNull: false,
@@ -22,7 +24,7 @@ module.exports = {
         references: {
           model: 'Users',
           key: 'id'
-        }
+        },
       },
       createdAt: {
         allowNull: false,
