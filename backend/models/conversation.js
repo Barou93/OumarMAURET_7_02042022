@@ -19,8 +19,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Conversation.init({
-    sender: DataTypes.INTEGER,
-    receiver: DataTypes.INTEGER,
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    sender: DataTypes.UUID,
+    receiver: DataTypes.UUID,
   }, {
     sequelize,
     modelName: 'Conversation',

@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Post.init({
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     content: DataTypes.STRING,
     comments: DataTypes.STRING,
     attachment: DataTypes.STRING,

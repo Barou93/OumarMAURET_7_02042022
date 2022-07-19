@@ -26,15 +26,15 @@ module.exports.signUp = async (req, res, next) => {
     const { firstname, lastname, email, password, isAdmin } = req.body;
 
     if (!emailRegex.test(email))
-        res.status(400).json({ 'msg': "Cet email est incorrect, reesayer SVP!" });
+        return res.status(400).json({ 'msg': "Cet email est incorrect, reesayer SVP!" });
 
     if (!passwordRegex.test(password))
-        res.status(400).json({ "msg": "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial" });
+        return res.status(400).json({ "msg": "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial" });
 
 
 
     if (!firstname || !lastname || !email || !password) {
-        throw new RequestError('Veuillez remplir les champs obligatoire SVP!')
+        throw new RequestError('Veuillez remplir les champs obligatoire SVP!');
     }
     try {
 
@@ -42,22 +42,23 @@ module.exports.signUp = async (req, res, next) => {
         if (userfound !== null) {
             throw new UserError(`L'utilisateur ${firstname} existe déjà !`, 1)
         }
+
+
         //Encrypted password 
         bcrypt.hash(password, 10)
-            .then(hash => {
-                const user = User.create({
+            .then(async hash => {
+                const user = await User.create({
                     firstname,
                     lastname,
                     email,
                     password: hash,
-                    isAdmin
                 })
 
-                res.status(201).json({ "user": user.id });
+                res.status(201).json({ user: user.toJSON() });
             })
 
     } catch (err) {
-        next(err)
+        next(err);
 
     }
 

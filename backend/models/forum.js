@@ -27,10 +27,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Forum.init({
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     name: DataTypes.STRING,
     description: DataTypes.STRING,
     picture: DataTypes.STRING,
-    createByUserId: DataTypes.INTEGER
+    createByUserId: DataTypes.UUID
   }, {
     sequelize,
     modelName: 'Forum',

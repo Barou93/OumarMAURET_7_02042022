@@ -3,14 +3,14 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('Follows', {
       id: {
-        allowNull: false,
-        autoIncrement: true,
+         allowNull: false,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defautValue: Sequelize.UUIDV4
       },
       followerId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
+       allowNull: false,
+        type: Sequelize.UUID,
         references: {
           model: 'Users',
           key: 'id'
@@ -18,8 +18,8 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       followingId: {
-        allowNull: false,
-        type: Sequelize.INTEGER,
+       allowNull: false,
+        type: Sequelize.UUID,
         references: {
           model: 'Users',
           key: 'id'

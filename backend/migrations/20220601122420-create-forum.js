@@ -4,9 +4,9 @@ module.exports = {
     await queryInterface.createTable('Forums', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.UUID,
+        defautValue: Sequelize.UUIDV4
       },
       name: {
         allowNull: false,
@@ -22,7 +22,7 @@ module.exports = {
       },
       createByUserId: {
         allowNull: false,
-        type: Sequelize.INTEGER,
+        type: Sequelize.UUID,
         references: {
           model: 'Users',
           key: 'id'

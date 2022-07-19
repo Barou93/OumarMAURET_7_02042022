@@ -175,6 +175,33 @@ module.exports.addMembers = async (req, res, next) => {
     }
 }
 
+module.exports.getAllGroups = async (req, res, next) => {
+    const token = req.cookies.jwt;
+    const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);
+    const userTokenId = decoded.id;
+
+    try {
+
+        let currentUser = await User.findByPk(userTokenId);
+        currentUser == null ? res.status(404).json('Vous devez être connecté pour faire cette demande') : next();
+
+        const allGroups = await Forum.findAll({
+            order: [['createdAt', "ASC"]]
+        });
+
+        if (allGroups) return res.status(200).json(allGroups)
+
+
+
+
+    } catch (error) {
+
+        return res.status(500).json(error.message)
+
+    }
+
+}
+
 module.exports.getGroupMembers = async (req, res, next) => {
     const token = req.cookies.jwt;
     const decoded = jwtAuth.verify(token, process.env.TOKEN_SECRET);

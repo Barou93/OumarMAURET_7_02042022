@@ -30,8 +30,6 @@ module.exports.follow = async (req, res) => {
             return res.status(403).json("Vous pouvez pas vous suivre")
         }
 
-
-
         //Check if the id of the req.body is not already available in db
 
         if (!currentUser) {

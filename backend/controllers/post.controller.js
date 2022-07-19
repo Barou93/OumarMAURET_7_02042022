@@ -36,7 +36,7 @@ module.exports.createPost = async (req, res, next) => {
 
                 //Check if the post contains an image
                 if (user !== null) {
-                    if (req.file !== undefined || content != "") {
+                    if (req.file !== undefined) {
                         attachmentURL = `${req.protocol}://${req.get('host')}../frontend/public/uploads/${directory}/${req.file.filename}`
                     }
                     else {
@@ -53,14 +53,12 @@ module.exports.createPost = async (req, res, next) => {
                                 UserId: userTokenId
                             })
                             .then((post) => {
-                                if (post.content === "null") {
-                                    res.status(403).json('Merci de mettre une légende avant de publier')
-                                } else {
-                                    res.status(201).json({ "Votre contenu vient d'être publier 😊": post.content + post.attachment })
-                                }
+
                                 console.log(post)
+                                return res.status(201).json({ "Votre contenu vient d'être publier 😊": post.content })
+
                             })
-                            .catch(err => res.status(400).json({ 'Impossible de publier ce contenu 😥!': + err }))
+                            .catch(err => res.status(400).json({ 'Impossible de publier ce contenu 😥!': + err.message }))
                     }
 
                 }
@@ -69,7 +67,7 @@ module.exports.createPost = async (req, res, next) => {
 
     } catch (err) {
 
-        res.status(500).json(err)
+        return res.status(500).json(err.message)
     }
 }
 

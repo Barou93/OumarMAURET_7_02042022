@@ -15,8 +15,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   ForumMessage.init({
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     forumId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       references: {
         model: 'Forum',
         key: 'id'
@@ -25,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
 
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       references: {
         model: 'User',
         key: 'id',

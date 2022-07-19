@@ -49,15 +49,14 @@ module.exports.createCommentPost = async (req, res, next) => {
 
 module.exports.readComments = async (req, res, next) => {
     await Comment.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt',] },
-        order: ['createAt', 'DESC']
+
+        order: [['createdAt', 'DESC']]
 
     }).then((comments) => {
-
         res.status(200).json(comments)
     })
         .catch((err) => {
-            next(err)
+            return res.status(500).json(err.message)
         })
 
 }

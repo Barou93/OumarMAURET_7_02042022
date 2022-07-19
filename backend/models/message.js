@@ -17,8 +17,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Message.init({
-    conversationId: DataTypes.INTEGER,
-    senderId: DataTypes.INTEGER,
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
+    conversationId: DataTypes.UUID,
+    senderId: DataTypes.UUID,
     message: DataTypes.STRING,
     isRead: DataTypes.BOOLEAN
 

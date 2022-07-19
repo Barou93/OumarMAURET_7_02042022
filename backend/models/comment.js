@@ -33,8 +33,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Comment.init({
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
     postId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       references: {
         model: 'Post',
         key: 'id'
@@ -42,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
     },
     userId: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.UUID,
       model: 'User',
       key: 'id'
     },

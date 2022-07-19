@@ -68,7 +68,7 @@ module.exports.sendMessage = async (req, res) => {
 
     try {
         const currentUser = userId;
-        const conversationId = parseInt(req.params.id);
+        const conversationId = req.params.id;
         console.log(conversationId)
         const { message } = req.body;
 
@@ -172,7 +172,7 @@ module.exports.getMessages = async (req, res) => {
                     receiver: users
                 },
             },
-            attributes: ['id'],
+
             order: [['createdAt', 'ASC']],
             include: [{ model: Message },
 

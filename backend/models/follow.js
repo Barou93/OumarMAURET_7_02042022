@@ -16,16 +16,25 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   Follow.init({
+    id: {
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
+    },
 
     followerId: {
-      type: DataTypes.INTEGER,
-      model: 'User',
-      key: 'id'
+      type: DataTypes.UUID,
+      references: {
+        model: 'User',
+        key: 'id'
+      }
     },
     followingId: {
-      type: DataTypes.INTEGER,
-      model: 'User',
-      key: 'id'
+      type: DataTypes.UUID,
+      references: {
+        model: 'User',
+        key: 'id'
+      }
     }
 
 
