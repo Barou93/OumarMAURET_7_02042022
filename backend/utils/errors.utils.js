@@ -1,57 +1,50 @@
-//Configure all Errors messages
+module.exports.signUpErrors = (err) => {
+
+    let errors = { firstname: "", lastname: "", email: "", password: "" };
+
+    if (!email && !password)
+        err.message = 'Mauvais email ou mot de passe';
 
 
-// 0 - Message simple
-// 1 - Message sans error
-// 3 - Toutes les informations
+    if (email && password !== null)
+        err.message = "Ce compte n'existe pas, réessayer SVP";
+
+    if (!password)
+        err.message = "Mot de passe erroné";
+
+    if (err.message.includes("email"))
+        errors.email = "Cet email est incorrect, reesayer SVP!";
+
+    if (err.message.includes("password"))
+        errors.password = "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial"
+
+    if (err.message.includes("firstname"))
+        errors.firstname = "Ce nom est déjà pris ou déjà pris";
 
 
-class AllErrors extends Error {
-    constructor(errorMessage, errorType = '') {
-        super()
-        this.name = this.constructor.name;
-        this.message = errorMessage;
-        switch (this.constructor.name) {
-            case 'AuthentificationError':
-                if (errorType == 0) {
-                    this.statusCode = 400;
-                } else if (errorType == 1) {
-                    this.statusCode = 404;
-                } else {
-                    this.statusCode = 401
-                }
-                break
+    if (err.code === 18456 && Object.keys(err.keyValue)[3].includes("password"))
+        errors.password = "Mot de passe erroné";
 
-            case 'UserError':
-                errorType == 0 ? this.statusCode = 404 : this.statusCode = 409;
-                break
+    if (err.code === 18456 && Object.keys(err.keyValue)[2].includes("email"))
+        errors.email = "Cet email est incorrect, reesayer SVP!";
 
-            case 'PostError':
-                errorType == 0 ? this.statusCode = 404 : this.statusCode = 409;
-                break
-
-            case 'CommentError':
-                errorType == 0 ? this.statusCode = 404 : this.statusCode = 409;
-                break
-
-            case 'LikeError':
-                errorType == 0 ? this.statusCode = 404 : this.statusCode = 409;
-                break
-
-            case 'RequestError':
-                this.statusCode = 400
-                break
-            default:
-                console.log('No Handler for that')
-        }
-
-    }
+    return errors;
 }
 
-class AuthentificationError extends AllErrors { }
-class UserError extends AllErrors { }
-class PostError extends AllErrors { }
-class RequestError extends AllErrors { }
+module.exports.signInErrors = (err) => {
+    let errors = { email: '', password: '' };
 
-module.exports = { AllErrors, AuthentificationError, UserError, PostError, RequestError }
+    /*if (err.message.includes(null)) {
+        errors.email = "Saisissez une adresse e-mail";
+        errors.password = "Saisissez votre mot de passe";
+    }*/
+    /*
+        if (err.message.includes("email"))
+            errors.email = "Email inconnu";
+    
+        if (err.message.includes(errors.password))
+            errors.password = "Mot de passe incorrect";*/
 
+
+    return errors;
+}

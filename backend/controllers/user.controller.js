@@ -5,7 +5,7 @@ const User = models.User;
 
 const Follow = models.Follow;
 //Errors utils
-const { RequestError, UserError } = require('../utils/errors.utils')
+
 
 
 
@@ -37,7 +37,7 @@ module.exports.getAllUsers = async (req, res) => {
         res.status(200).json(users)
     })
         .catch((err) => {
-            throw new RequestError("Nous avons rencontrer un problème merci de reessayer !", 0)
+            res.status(400).send(err)
         })
 
 }
@@ -70,12 +70,12 @@ module.exports.userInfo = async (req, res, next) => {
     })
         .then((user) => {
 
-            if (!user) throw new UserError("Cet utilisateur n'existe pas !", 0)
+            if (!user) res.status(404).send("Cet utilisateur n'existe pas !")
 
             res.status(200).json(user)
         })
         .catch((err) => {
-            next(err)
+            res.status(500).send(err)
         })
 };
 
@@ -94,20 +94,22 @@ module.exports.UpdateUser = async (req, res, next) => {
         .then(userupdate => {
 
             if (!userupdate)
-                UserError("Impossible de mettre à jour !", 0)
+                res.status(401).json("Impossible de mettre à jour !")
 
             if (userupdate !== user.id && userupdate !== user.isAdmin == false)
                 return res.status(401).json('Impossible de modifier cet utlisateur.')
 
-            if (userupdate === null) throw new UserError("Cet utilisateur n'existe pas !", 0)
+            if (userupdate === null) res.status(404).json("Cet utilisateur n'existe pas !")
 
             userupdate.bio = body.bio
             userupdate.save()
-                .then(() => res.status(201).json({ 'message': 'Mise à jour effectuée avec succès' }))
+                .then(() => {
+                    return res.status(201).json({ 'message': 'Mise à jour effectuée avec succès' })
+                })
                 .catch((err) => res.status(404).json({ err }))
         })
         .catch((err) => {
-            next(err)
+            return res.status(500).send(err);
         })
 
 }
@@ -124,11 +126,11 @@ module.exports.deleteUser = (req, res, next) => {
             if (userdelete !== user.id && user.isAdmin == false)
                 return res.status(401).json('Impossible de modifier cet utlisateur.')
 
-            if (userdelete === 0) throw new RequestError("Cet utilisateur n'existe pas !")
+            if (userdelete === 0) return res.status(404).json("Cet utilisateur n'existe pas !")
             res.status(200).json({ 'message': 'Compte supprimé avec succès' })
         })
         .catch(err => {
-            next(err)
+            return res.status(500).send(err);
         })
 
 }

@@ -1,0 +1,118 @@
+.body {
+  background-color: #fff;
+}
+
+.logo__container {
+  &__img {
+    @include desktop-only {
+      position: absolute;
+      top: -77px;
+      left: -15px;
+      z-index: 2;
+    }
+  }
+}
+
+body {
+  @include desktop-only {
+    background-color: #fff;
+  }
+}
+
+.register_signin {
+  padding-top: 60px;
+}
+
+.signin {
+  display: flex;
+  flex-direction: column;
+  max-width: 352px;
+  width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  padding: 24px;
+  border-radius: 8px;
+  margin: 0 auto;
+  background: #fff;
+
+
+  @include desktop-only {
+    width: 100%;
+    background: #fff;
+    margin: 0 auto;
+    padding-top: 100px;
+    box-shadow: none;
+  }
+
+
+}
+
+.header__content {
+  padding-bottom: 15px;
+
+  &__heading {
+    font-size: 2rem;
+    line-height: 1.25;
+    font-weight: 600;
+    color: rgba(0, 0, 0, 0.9);
+    padding: 0 0 4px 0;
+
+    @include desktop-only {
+      font-size: 2.4rem;
+    }
+  }
+
+  &__subheading {
+    font-size: 1rem;
+    line-height: 1.42857;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.9);
+
+    @include desktop-only {
+      font-size: 1.4rem;
+    }
+  }
+}
+
+.forgot-password {
+  display: inline-block;
+  padding: 8px;
+  text-decoration: none;
+  color: $secondarycolor;
+  font-weight: bold;
+  position: relative;
+  left: 0px;
+  margin-top: 8px;
+}
+
+.submit {
+  margin-top: 20px;
+}
+
+.mail,
+.pass {
+  height: 52px;
+}
+
+.email,
+.password {
+  font-size: 12px;
+  margin-top: 8px;
+
+}
+
+
+.errors {
+  color: crimson;
+  font-weight: bold;
+}
+
+.success {
+  color: $greencolor;
+  font-size: 18px;
+  padding-bottom: 25px;
+  text-align: center;
+
+  @include desktop-only {
+    padding: 22px;
+  }
+}

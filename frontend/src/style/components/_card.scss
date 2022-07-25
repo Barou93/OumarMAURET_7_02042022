@@ -1,0 +1,138 @@
+.card {
+  border: 1px solid $postbordercolor;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  z-index: 0;
+
+  &__header {
+    padding: 30px;
+    position: relative;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  &__header-avatar {
+    padding-left: 60px;
+  }
+
+  &__avatar {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  &__title {
+    font-size: 15px;
+    font-weight: bold;
+    margin: 5px 0;
+    text-decoration: none;
+    color: #000;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__time {
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.38);
+  }
+
+  &__options {
+    position: absolute;
+    top: 30%;
+    right: 15px;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    background: url(../assets/icons/plus-doptions.png) center / contain no-repeat;
+  }
+
+  &__body {
+    padding: 0 10px 10px 10px;
+
+    p {
+      margin-bottom: 15px;
+    }
+
+    .fullwidth {
+      display: block;
+      object-fit: cover;
+      height: 500px;
+      margin-left: -10px;
+      margin-right: -10px;
+      width: calc(100% + 20px);
+    }
+  }
+
+  &__reaction {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    font-size: 15px;
+
+    a {
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.68);
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &__likereaction::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    width: 25px;
+    height: 25px;
+    background: url(../assets/icons/heart.png) center / 25px 25px no-repeat;
+  }
+
+  &__interactions {
+    display: flex;
+    border-top: 1px solid $postbordercolor;
+    border-bottom: 1px solid $postbordercolor;
+    padding: 10px;
+    font-size: 15px;
+
+    a {
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.68);
+    }
+  }
+
+  &__like::before,
+  &__comments::before {
+    content: "";
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    width: 25px;
+    height: 25px;
+    background: url(../assets/icons/coeur.png) center / 25px 25px no-repeat;
+  }
+
+  &__like:hover:before {
+    background: url(../assets/icons/coeur_full.png) center / 25px 25px no-repeat;
+  }
+
+  &__comments::before {
+    background: url(../assets/icons/comments.png) center / 25px 25px no-repeat;
+  }
+
+  &__comments {
+    margin-left: auto;
+  }
+}

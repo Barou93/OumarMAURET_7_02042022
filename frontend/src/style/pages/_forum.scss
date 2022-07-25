@@ -1,0 +1,261 @@
+.forum__container {
+  background-color: inherit;
+}
+
+.forum__sidebar {
+  &__header {
+    background-color: #fff;
+    margin: 0;
+
+    &__addicon {
+      margin-right: 15px;
+      background-color: $secondarycolor;
+      //width: 25px;
+      padding: 6px 2px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #fff;
+      border-radius: 5px;
+      text-decoration: none;
+
+      &::before {
+        content: "";
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        //margin: 0 0 0 15px;
+        background: url(../assets/icons/plus-white.png) center center/100% 100% no-repeat !important;
+      }
+    }
+  }
+
+  &__icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: -5px 5px -5px -5px;
+    background: url(../assets/icons/people-white.png) center center/100% 100% no-repeat !important;
+  }
+
+  &__search {
+    input {
+      background-color: #fff;
+      border-radius: none;
+      border-top-left-radius: 8px;
+      border-bottom-left-radius: 8px;
+      width: 80%;
+      padding: 8px;
+    }
+
+    &__icon {
+      margin-left: 250px;
+      margin-top: -5px;
+      background: #f8f8f8;
+    }
+  }
+}
+
+.active__forum {
+  background: #fff;
+}
+
+//Forum message container
+
+.forum__content {
+  background: #fff;
+
+  &__header {
+    display: block;
+    padding: 8px;
+  }
+
+  &__group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__avatar {
+      &__members {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        margin-left: -2px;
+        box-shadow: $boxShadow;
+      }
+
+      &__moreMembers {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        margin-left: -5px;
+        background: url(../assets/icons/plus-doptions.png) center / 10px 10px no-repeat,
+          $iconbuttoncolor;
+      }
+    }
+
+    &__title {
+      a {
+        text-decoration: none;
+        color: rgba(0, 0, 0, 0.9);
+        font-weight: bold;
+      }
+    }
+
+    &__button {
+      display: flex;
+      align-items: center;
+      position: relative;
+
+      &__addNewMember {
+        cursor: pointer;
+        background: #31a24c;
+        border: 1px solid #31a24c;
+        border-radius: 6px;
+        padding: 8px;
+        color: #fff !important;
+        font-weight: bold;
+        font-size: 12px;
+
+        &::before {
+          content: "";
+          display: inline-block;
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          margin-bottom: -5px;
+          margin-right: 5px;
+          background: url(../assets/icons/plus-white.png) center / 15px 15px no-repeat;
+        }
+      }
+    }
+  }
+}
+
+.forum__form__container {
+  button {
+    text-indent: 0;
+    width: 100%;
+    height: 35px;
+    overflow: visible;
+    border: none;
+    opacity: 0.5;
+    border-radius: 15px;
+    margin-left: 8px;
+    color: #fff;
+    background: #000;
+
+    &:hover {
+      background: #000;
+    }
+  }
+}
+
+.forum__infos {
+  display: block;
+  background-color: #fff;
+  margin-top: 0;
+
+  @include tablette-small {
+    display: none;
+  }
+
+  &__details {
+    margin-top: 15px;
+    text-overflow: ellipsis;
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    p {
+      font-size: 12px;
+    }
+  }
+
+  &__users {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.086);
+    padding-bottom: 15px;
+
+    p {
+      margin-top: 8px;
+      font-size: 13px;
+      color: rgba(0, 0, 0, 0.6);
+    }
+  }
+
+  &__avatar {
+    border: 1px solid $iconbuttoncolor;
+    background-color: $iconbuttoncolor;
+  }
+
+  &__contact {
+    &__info {
+      margin: 0;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.086);
+      padding-bottom: 15px;
+
+      p,
+      span {
+        font-weight: normal;
+        font-size: 12px;
+      }
+    }
+
+    &__group {
+      margin-top: 5px;
+      margin-bottom: 12px;
+      padding-bottom: 5px;
+
+      border-bottom: 1px solid rgba(0, 0, 0, 0.086);
+
+      &__members {
+        display: flex;
+        align-items: center;
+        margin-top: 5px;
+
+        p {
+          margin-left: 8px;
+          font-size: 12px;
+          font-weight: bold;
+        }
+
+        &__moreinfos {
+          font-weight: 300 !important;
+          font-size: 14px;
+        }
+
+        &__picture {
+          width: 30px;
+          height: 30px;
+          border-radius: 50%;
+          box-shadow: $boxShadow;
+        }
+      }
+    }
+  }
+
+  &__options {
+    margin-top: 15px;
+    margin-bottom: 15px;
+
+    flex-direction: column;
+
+    &__deleteforum {
+      margin-bottom: 20px;
+      width: 100%;
+
+      button {
+        margin-left: 25px;
+        background: #ed5e68;
+        border: 1px solid #ed5e68;
+        padding: 8px;
+        width: 80%;
+        border-radius: 8px;
+        //text-align: center;
+        color: #fff;
+        cursor: pointer;
+      }
+    }
+  }
+}

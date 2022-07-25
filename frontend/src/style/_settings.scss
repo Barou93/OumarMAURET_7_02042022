@@ -1,0 +1,41 @@
+@font-face {
+  font-family: "font-1";
+  src: url("./assets/fonts/Poppins-SemiBold.ttf");
+}
+
+@font-face {
+  font-family: "font-2";
+  src: url("./assets/fonts/Poppins-Regular.ttf");
+}
+
+@font-face {
+  font-family: "font-3";
+  src: url("./assets/fonts/Poppins-Black.ttf");
+}
+
+//Fonts
+
+$font-1: "font-1", sans-serif;
+$font-2: "font-2", sans-serif;
+$font-3: "font-3", sans-serif;
+
+//Colors
+
+$primarycolor: #fd2d01;
+$secondarycolor: #df4f4f;
+$backgroundcolor: #f0f2f5;
+$blackcolor: #0e0e0e;
+$buttonColor: #3cbae2;
+$bodercolor: #a0a0a0;
+$iconbuttoncolor: #e4e6eb;
+$coloropacity: #ffcad3;
+$buttoncolorhover: #fe808a;
+$postbordercolor: #dbdbdb;
+$greencolor: #31a24c;
+$boxShadow: 1px 2px 0.5px 1px rgba(170, 170, 170, 0.733);
+
+$textcolor: #7b8793;
+
+//Mixins
+
+//Functions

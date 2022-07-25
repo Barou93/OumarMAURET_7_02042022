@@ -1,0 +1,309 @@
+.profile {
+  &__container {
+    max-width: 1291px;
+    margin-left: auto;
+    margin-right: auto;
+
+    &__user {
+      background-color: #fff;
+
+      &__cover {
+        max-width: 100%;
+        height: 245px;
+        padding-bottom: 25%;
+        border-top-right-radius: 20px;
+        border-top-left-radius: 20px;
+
+        &__picture {
+          object-fit: cover;
+          width: 100%;
+          height: 245px;
+        }
+      }
+
+      &__picture {
+        position: absolute;
+        left: 20px;
+        bottom: 50%;
+
+        @include tablette-small {
+          position: relative;
+          left: 0;
+          bottom: 100px;
+        }
+      }
+
+      &__infos {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 50px;
+        background: #fff;
+        position: relative;
+
+        @include tablette-small {
+          display: flex;
+          flex-direction: column;
+          padding: 20px;
+        }
+      }
+
+      &__avatar {
+        display: inline-block;
+        border: 1px solid #fff;
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+      }
+
+      &__icons {
+        display: inline-block;
+        border: 1px solid $iconbuttoncolor;
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        margin-left: -50px;
+        cursor: pointer;
+        background: url(../assets/icons/photo-camera.png) center / 20px 20px no-repeat,
+          $iconbuttoncolor;
+        z-index: 1;
+      }
+
+      &__title {
+        position: absolute;
+        bottom: 100%;
+        left: 200px;
+
+        @include tablette-small {
+          position: relative;
+          left: 0;
+          bottom: 80px;
+          text-align: center;
+        }
+
+        p {
+          font-size: 20px;
+          font-weight: bold;
+          margin-bottom: 10px;
+        }
+      }
+
+      &__edit__icon {
+        position: absolute;
+        bottom: 100%;
+        right: 50px;
+
+        @include tablette-small {
+          position: relative;
+          margin-top: 20px;
+          text-align: center;
+          right: 0;
+        }
+      }
+
+      &__edit__profile {
+        padding: 8px;
+        border: 1px solid #e4e6eb;
+        background-color: $iconbuttoncolor;
+        color: #000;
+        font-weight: bold;
+        cursor: pointer;
+
+        &::before {
+          content: "";
+          width: 15px;
+          height: 15px;
+          vertical-align: middle;
+          display: inline-block;
+          background: url(../assets/icons/edit.png) center / 100% 100% no-repeat;
+        }
+      }
+
+      &__follow {
+        position: absolute;
+
+        p {
+          margin-top: 12px;
+          font-size: 15px;
+        }
+
+        &__link {
+          display: flex;
+
+          &::after {
+            content: "";
+            width: 22px;
+            height: 22px;
+            margin-top: 8px;
+            margin-left: -27px;
+            background: url(../assets/icons/plus-doptions.png) center / 100% 100% no-repeat;
+            z-index: 1;
+          }
+        }
+
+        &__img {
+          height: 35px;
+          width: 35px;
+          border: 1px solid $iconbuttoncolor;
+          border-radius: 50%;
+          box-shadow: 1px 2px 0.5px 1px rgba(170, 170, 170, 0.733);
+
+          &:last-child {
+            opacity: 0.4;
+          }
+        }
+      }
+    }
+  }
+}
+
+.profile__content {
+  display: flex;
+  padding: 0 15px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 1291px;
+
+  @include desktop-only {
+    display: flex;
+    align-items: center;
+    width: 80%;
+    flex-direction: column;
+  }
+
+  @include tablette-small {
+    width: 100%;
+  }
+
+  @include phone {
+    width: 100%;
+  }
+
+  &__followings__infos {
+    margin-bottom: 10px;
+  }
+
+  &__userbio {
+    position: relative;
+    top: 0;
+    height: 100%;
+    width: 425px;
+    background: #fff;
+    border-radius: 10px;
+
+    @include desktop-only {
+      display: block;
+      width: 80%;
+    }
+
+    @include tablette-small {
+      width: 100%;
+    }
+
+    @include phone {
+      width: 100%;
+    }
+
+    h2 {
+      color: #000;
+      font-weight: bold;
+      text-align: left;
+      margin: 12px 0;
+    }
+
+    p {
+      font-size: 15px;
+      color: rgba(0, 0, 0, 0.68);
+    }
+
+    &__edit__bio {
+      width: 100%;
+      border: 1px solid $iconbuttoncolor;
+      background-color: $iconbuttoncolor;
+      border-radius: 5px;
+      margin-top: 12px;
+      font-size: 15px;
+      padding: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
+
+  &__main {
+    width: 50%;
+
+    @include desktop-only {
+      width: 80%;
+    }
+
+    @include tablette-small {
+      width: 100%;
+    }
+
+    @include phone {
+      width: 100%;
+    }
+  }
+}
+
+.post {
+  flex: none;
+  position: absolute;
+  margin-right: 50px;
+  margin-top: 180px;
+  padding: 20px;
+  width: 425px;
+  background: #fff;
+  border-radius: 10px;
+
+  @include desktop-only {
+    position: relative;
+    width: 80%;
+    margin: 20px 0;
+  }
+
+  @include tablette-small {
+    width: 100%;
+  }
+
+  h2 {
+    margin-bottom: 15px;
+    font-size: 18px;
+  }
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+
+    &__picture {
+      width: 125px;
+      height: 125px;
+      object-fit: cover;
+      border: 1px solid #fff;
+    }
+  }
+}
+
+.following {
+  float: none;
+  text-align: center;
+  padding: 2px 5px;
+  border: none;
+  background-color: $buttoncolorhover;
+  color: #fff;
+
+  &:hover {
+    opacity: 0.7;
+    background: $buttoncolorhover;
+    border: none;
+  }
+
+  &::before {
+    background: none;
+    display: inherit;
+  }
+}

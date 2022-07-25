@@ -1,0 +1,25 @@
+.edit__comment {
+  &__container {
+    visibility: hidden;
+    position: absolute;
+    box-shadow: 0.5px 0.5px 1px 1px rgba(0, 0, 0, 0.36);
+    display: flex;
+    flex-direction: column;
+    left: calc(50% - 27px);
+    transform: translateY(-50%);
+    background: #fff;
+    width: 20%;
+    height: auto;
+    padding: 5px 8px;
+    border-radius: 2px;
+    background: #fff;
+    z-index: 1;
+  }
+  &__content,
+  &__delete__comment {
+    text-decoration: none;
+    margin-bottom: 20px;
+    color: $textcolor;
+    font-weight: bold;
+  }
+}

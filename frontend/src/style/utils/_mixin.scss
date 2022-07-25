@@ -1,0 +1,29 @@
+/*Media queries*/
+
+@mixin fulldesktop {
+  @media only screen and (max-width: 1150px) {
+    @content;
+  }
+}
+@mixin desktop-only {
+  @media only screen and (max-width: 1024px) {
+    @content;
+  }
+}
+@mixin tablette-only {
+  @media only screen and (max-width: 950px) {
+    @content;
+  }
+}
+
+@mixin tablette-small {
+  @media only screen and (max-width: 860px) {
+    @content;
+  }
+}
+
+@mixin phone {
+  @media only screen and (max-width: 465px) {
+    @content;
+  }
+}

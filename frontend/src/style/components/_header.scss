@@ -1,0 +1,218 @@
+body {
+  background-color: $backgroundcolor;
+}
+
+%iconbuttonContain {
+  border: 1px solid $iconbuttoncolor;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+}
+
+%settingicon {
+  content: "";
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  vertical-align: middle;
+  margin-top: -2px;
+  margin-right: 20px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #fff;
+  border-bottom: 1px solid rgba(166, 166, 166, 0.67);
+  z-index: 1000;
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__img {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    background: url(../assets/img/icon.png) center / contain no-repeat;
+  }
+
+  .search-icon {
+    position: absolute;
+    top: 20px;
+    display: inline-block;
+    height: 20px;
+    width: 20px;
+    margin-left: 95px;
+    background: url(../assets/icons/chercher.png) center center/ 18px 18px no-repeat;
+    z-index: 1;
+
+    @include fulldesktop {
+      border: 1px solid $iconbuttoncolor;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      background-color: $iconbuttoncolor;
+
+      &:hover {
+        display: none;
+      }
+
+      &:hover~.header__input {
+        display: block;
+      }
+    }
+  }
+
+  &__options {
+    display: none;
+
+    @include fulldesktop {
+      display: block;
+      position: absolute;
+      right: 35%;
+      text-indent: -3000px;
+      border: none;
+      width: 30px;
+      height: 30px;
+      background: url(../assets/icons/hamburger.png) center / 100% 100% no-repeat;
+    }
+  }
+
+  &__input {
+    position: absolute;
+    top: 15px;
+    margin-left: 80px;
+    padding: 8px 5px;
+    width: 20%;
+    box-sizing: border-box;
+    border: 1px solid $bodercolor;
+    border-radius: 15px;
+    outline: none;
+
+    @include fulldesktop {
+      display: none;
+    }
+  }
+
+  input[type="text"]::placeholder {
+    position: relative;
+    left: 30px;
+    color: $bodercolor;
+    font-size: 13px;
+  }
+
+  &__user {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+
+    &__infos {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.9);
+    }
+
+    .username {
+      position: absolute;
+      right: 12%;
+      font-size: 13px;
+      font-weight: bold;
+    }
+  }
+
+  &__menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 40px;
+    }
+
+    a {
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.68);
+      font-weight: bold;
+      font-size: 12px;
+
+      &:hover {
+        color: #000;
+        font-weight: bold;
+      }
+    }
+
+    &__icon {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      background: url(../assets/icons/home.png) center / 100% 100% no-repeat;
+      opacity: 0.7;
+
+      &.inbox {
+        background: url(../assets/icons/chat.png) center / 100% 100% no-repeat;
+        opacity: 0.7;
+
+        &:hover {
+          background: url(../assets/icons/chat_active.png) center / 100% 100%;
+        }
+      }
+
+      &.group {
+        background: url(../assets/icons/people.png) center / 100% 100% no-repeat;
+        opacity: 0.7;
+
+        &:hover {
+          background: url(../assets/icons/people_active.png) center / 100% 100%;
+        }
+      }
+    }
+
+    &__title {
+      margin-top: 5px;
+    }
+  }
+
+  &__account {
+    @extend %iconbuttonContain;
+    position: absolute;
+    right: 20%;
+    top: 10px;
+  }
+
+  &__notifications {
+    @extend %iconbuttonContain;
+    position: absolute;
+    right: 5%;
+    cursor: pointer;
+    background: url(../assets/icons/bell.png) center / 15px 15px no-repeat,
+      $iconbuttoncolor;
+  }
+
+  &__setting {
+    position: absolute;
+    @extend %iconbuttonContain;
+    width: 35px;
+    height: 35px;
+    right: 15px;
+    cursor: pointer;
+
+    background: url(../assets/icons/option_icon.png) center / 12px 12px no-repeat,
+      $iconbuttoncolor;
+
+    &:hover {
+      display: block;
+    }
+  }
+}

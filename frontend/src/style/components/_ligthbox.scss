@@ -1,0 +1,74 @@
+.lightbox {
+  visibility: hidden;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  z-index: 2000;
+  overflow: auto;
+
+  button {
+    opacity: 0.5;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  &__close {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    border-radius: 50%;
+    text-indent: -3000px;
+    border: 1px solid $bodercolor;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    background: url(../assets/icons/signe-de-la-croix.png) center / 15px 15px no-repeat,
+      $iconbuttoncolor;
+  }
+
+  &__container {
+    display: grid;
+    grid-template-columns: 75% 25%;
+
+    @include fulldesktop {
+      display: grid;
+      grid-template-columns: 60% 40%;
+    }
+
+    @include tablette-only {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &__img {
+      img {
+        max-width: 100%;
+        height: 100%;
+      }
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-left: 50px;
+      margin-right: 50px;
+      min-height: 100vh;
+
+      @include tablette-only {
+        margin-left: 25px;
+        margin-right: 25px;
+        min-height: auto;
+      }
+    }
+
+    &__content {
+      background-color: #fff;
+      z-index: 2;
+    }
+  }
+}

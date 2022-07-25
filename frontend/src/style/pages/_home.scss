@@ -1,0 +1,70 @@
+.body {
+  overflow-y: visible;
+}
+
+.container {
+  display: flex;
+  padding: 0 15px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1291px;
+
+  @include phone {
+    padding: 0;
+  }
+}
+
+.contain {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.main {
+  @include phone {
+    margin: 0;
+  }
+
+  width: 100%;
+  margin-left: 35px;
+  margin-right: 35px;
+
+  &__post {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    height: 55px;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+
+    &__text {
+      padding: 7px 15px;
+      color: rgba(0, 0, 0, 0.38);
+      background-color: #f0efef;
+      text-align: center;
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: bold;
+      width: 100%;
+      cursor: pointer;
+      margin: 8px;
+    }
+
+    &__usericon {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    &__btn_img {
+      display: inline-block;
+      border-style: none;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      background: url(../assets/icons/upload.png) center center / contain no-repeat;
+    }
+  }
+}

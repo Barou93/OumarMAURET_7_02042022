@@ -16,10 +16,9 @@ const imageFilter = (req, file, cb) => {
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         let directory = "";
-        directory = "profil" ? "profil" : "",
-            directory = "post" ? "post" : "";
+        directory = "profil" ? "profil" : "post",
 
-        cb(null, `../frontend/public/uploads/${directory}`);
+            cb(null, `../frontend/public/uploads/${directory}`);
     },
     filename: (req, file, cb) => {
         let extension = MIME_TYPES[file.mimetype];

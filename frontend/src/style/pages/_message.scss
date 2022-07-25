@@ -1,0 +1,486 @@
+.message__container {
+  display: flex;
+  max-width: 1366px;
+  background: #fff;
+}
+
+.message__sidebar {
+  flex: none;
+  width: 360px;
+  height: auto;
+  border-right: 1px solid rgba(0, 0, 0, 0.086);
+
+  @include tablette-small {
+    width: auto;
+  }
+
+  @include phone {
+    //display: none;
+    width: 100%;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    height: 44px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.086);
+    padding: 5px 12px;
+    margin-top: 5px;
+    max-height: 500px;
+  }
+
+  h1 {
+    font-size: 20px;
+    font-weight: bold;
+    flex-grow: 1;
+
+    @include tablette-small {
+      display: none;
+    }
+
+    @include phone {
+      display: block;
+    }
+  }
+
+  &__icon {
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    cursor: pointer;
+    background: url(../assets/icons/write.png) center center / 25px 25px no-repeat;
+
+    @include tablette-small {
+      flex: none;
+    }
+
+    @include phone {
+      display: block;
+    }
+  }
+
+  &__search {
+    margin-top: 10px;
+
+    label {
+      position: absolute;
+      height: 1px;
+      width: 1px;
+      overflow: hidden;
+
+      @include tablette-small {
+        display: none;
+      }
+
+      @include phone {
+        display: block;
+        margin: 2px 5px;
+      }
+    }
+
+    &__icon {
+      position: absolute;
+      left: 15px;
+      top: 21.5%;
+      vertical-align: middle;
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      background: url(../assets/icons/chercher.png) center / 100% 100% no-repeat;
+
+      @include tablette-small {
+        display: none;
+      }
+
+      @include phone {
+        display: block;
+        left: 20px;
+        top: 20%;
+      }
+    }
+
+    &__input {
+      border: 1px solid #eef3f8;
+      border-radius: 5px;
+      background-color: #eef3f8;
+      height: 2rem;
+      padding: 0 28px 2px 32px;
+      font-size: 1.02rem;
+      margin: 8px 8px;
+      width: calc(100% - 30px);
+      outline: none;
+
+      @include tablette-small {
+        display: none;
+      }
+
+      @include phone {
+        display: block;
+      }
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-left: 10px;
+    padding: 2px 5px;
+    text-align: justify;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-top: 5px;
+
+    &__container {
+      display: flex;
+      flex-direction: column;
+      overflow: auto;
+      position: sticky;
+      top: 6rem;
+
+      @include tablette-small {
+        display: flex;
+        align-items: center;
+        margin: 0;
+      }
+
+      @include phone {
+        display: block;
+      }
+    }
+
+    &.active__msg {
+      background: rgba(238, 140, 140, 0.2);
+
+      @include tablette-small {
+        padding: 4px 8px;
+        border-top-left-radius: 10px;
+        border-bottom-left-radius: 10px;
+      }
+
+      &:hover {
+        background: rgba(238, 140, 140, 0.2);
+      }
+    }
+
+    &.new__msg {
+      &::after {
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        margin-left: auto;
+        background-color: $secondarycolor;
+
+        @include tablette-small {
+          margin-right: 0px;
+          width: 8px;
+          height: 8px;
+        }
+      }
+
+      p,
+      span {
+        font-weight: bold;
+      }
+
+      span {
+        color: $secondarycolor;
+      }
+    }
+
+    &:hover {
+      background: rgba(212, 212, 212, 0.2);
+    }
+
+    &__avatar {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      margin-right: 15px;
+      border-radius: 50%;
+      object-fit: cover;
+
+      @include tablette-small {
+        width: 60px;
+        height: 60px;
+      }
+    }
+
+    &__usermessage {
+      position: absolute;
+      padding-left: 60px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 300px;
+
+      @include tablette-small {
+        display: none;
+      }
+
+      @include phone {
+        display: block;
+        margin-left: 10px;
+      }
+    }
+
+    &__message {
+      font-size: 12px;
+      overflow: hidden;
+      width: 500px;
+      text-align: justify;
+      white-space: nowrap;
+      max-height: calc(12px * 2);
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+/**Message content : contenu du message utilisateur*/
+
+.message__display {
+  overflow: hidden !important;
+  overflow-y: scroll !important;
+  width: 100%;
+  height: 100%;
+
+  @include phone {
+    display: none;
+  }
+}
+
+.message__content {
+  width: 100%;
+  height: 100%;
+  border-right: 1px solid rgba(0, 0, 0, 0.086);
+
+  &__user {
+    display: flex;
+    align-items: center;
+  }
+
+  .userpicture {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    //margin-left: 20px;
+
+    @include phone {
+      width: 30px;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+
+    &__profil {
+      display: flex;
+      align-items: center;
+      margin-left: 10px;
+      text-decoration: none;
+      color: rgba(0, 0, 0, 0.8);
+      font-weight: bold;
+      font-size: 15px;
+
+      p {
+        padding: 0 0 0 10px;
+      }
+    }
+
+    &__backicon {
+      @include phone {
+        width: 15px;
+        height: 15px;
+        background: url(../assets/icons/arrow-left.png) center center / 100% 100% no-repeat;
+        margin-left: 15px;
+        cursor: pointer;
+        opacity: 0.8;
+      }
+    }
+
+    padding: 3px 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.086);
+
+    @include phone {
+      display: none;
+      padding: 12px 8px;
+    }
+
+    &__avatar {
+      display: inline-block;
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      margin-right: 10px;
+      background: url(../assets/img/user_1.jpg) center center / 100% 100% no-repeat;
+
+      @include phone {
+        margin-left: 25px;
+      }
+    }
+
+    &__options {
+      margin-left: auto;
+      border: none;
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      cursor: pointer;
+      background: url(../assets/icons/plus-doptions.png) center center / 15px 15px no-repeat;
+    }
+  }
+
+  &__body {
+    margin-top: 20px;
+    margin-right: 20px;
+
+    &__mymessage {
+      &__list {
+        display: flex;
+        align-items: flex-start;
+        flex-flow: column wrap;
+      }
+
+      &__text {
+        color: rgb(0, 0, 0);
+        margin-top: 5px;
+        margin-left: 10px;
+        //padding: 15px;
+        word-wrap: break-word;
+
+        font-size: 15px;
+      }
+    }
+
+    &__recever {
+      &__message {
+        display: flex;
+        flex-direction: column;
+        padding: 10px;
+
+        @include phone {
+          padding: 0;
+        }
+
+        &__text {
+          margin: 4px 0 4px 56px;
+          word-wrap: break-word;
+          font-size: 15px;
+
+          @include phone {
+            max-width: 100%;
+          }
+        }
+      }
+    }
+  }
+}
+
+.message__form {
+  display: flex;
+  position: relative;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    input {
+      position: relative;
+      width: 100%;
+      height: 40px;
+
+      padding: 10px 20px;
+      border: 1px solid rgba(0, 0, 0, 0.46);
+      border-radius: 5px;
+      outline: none;
+    }
+
+    button {
+      text-indent: -3000px;
+      width: 25px;
+      height: 25px;
+      overflow: hidden;
+      border: none;
+      opacity: 0.5;
+      margin-left: 8px;
+      background: url(../assets/icons/send.png) center / 100% 100% no-repeat;
+
+      &:hover {
+        opacity: 1;
+        background: url(../assets/icons/send_full.png) center / 100% 100% no-repeat;
+      }
+    }
+  }
+}
+
+.message__infos {
+  display: none;
+  flex: none;
+  width: 275px;
+  height: 100%;
+
+
+  &__user {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__avatar {
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    margin-top: 10px;
+  }
+
+  a {
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+    margin-top: 12px;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    margin-left: 15px;
+
+    h3 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: $secondarycolor;
+    }
+
+    &__infos {
+      margin-top: 25px;
+
+      p {
+        margin-top: 12px;
+        margin-bottom: 12px;
+        color: rgba(0, 0, 0, 0.8);
+        font-weight: bold;
+      }
+
+      span {
+        color: #000;
+        font-size: 15px;
+      }
+    }
+  }
+}

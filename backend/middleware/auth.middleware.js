@@ -38,8 +38,11 @@ module.exports.requireAuth = (req, res, next) => {
         jwt.verify(token, process.env.TOKEN_SECRET, async (err, decodedToken) => {
             if (err) {
                 console.log(err.message)
+                res.send(200).json("No token")
             } else {
-                //console.log(decodedToken.id);
+                let user = await User.findByPk(decodedToken.id,);
+                res.locals.user = user
+                console.log(res.locals.user.id);
                 next();
 
             }

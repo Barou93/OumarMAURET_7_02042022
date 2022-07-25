@@ -20,7 +20,7 @@ const groupRoutes = require('./routes/group.routes');
 
 require('dotenv').config({ path: './config/.env' });
 const { checkUser, requireAuth } = require('./middleware/auth.middleware');
-const errorHandler = require('./utils/errorsHandler.utils');
+
 
 
 const app = express();
@@ -47,7 +47,8 @@ app.use(cors(corsOptions));
 app.get('*', checkUser);
 
 app.get('/jwtid', requireAuth, (req, res) => {
-    res.status(200).json(res.locals.user.id)
+    //console.log(res.locals.user.id)
+    return res.status(200).send(res.locals.user.id)
 })
 
 //Use Socket
@@ -59,8 +60,8 @@ app.use((req, res, next) => {
 
 
 //Upload Images Path directory
-app.use('../frontend/public/uploads/post', express.static(path.join(__dirname, './frontend/public/uploads/post')));
-app.use('../frontend/public/uploads/profil', express.static(path.join(__dirname, './frontend/public/uploads/profil')));
+//app.use('../frontend/public/uploads/post', express.static(path.join(__dirname, './frontend/public/uploads/post')));
+//app.use('../frontend/public/uploads/profil', express.static(path.join(__dirname, './frontend/public/uploads/profil')));
 
 //Routes
 
@@ -72,15 +73,10 @@ app.use('/api/post', commentRoutes);
 app.use('/api/message/', messageRoutes);
 app.use('/api/group/', groupRoutes);
 
-app.use('/', (req, res) => {
-
-    res.sendFile(__dirname + '/index.html');
-
-})
 
 
-//Eroors Middleware
-app.use(errorHandler)
+
+
 
 
 //Strating Server

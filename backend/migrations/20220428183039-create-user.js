@@ -11,7 +11,6 @@ module.exports = {
       firstname: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
         validate: {
           len: [2, 255]
         }
@@ -58,7 +57,7 @@ module.exports = {
         },
 
         isAdmin: {
-          allowNull: false,
+          allowNull: true,
           type: Sequelize.BOOLEAN,
           defaultValue: false,
         },

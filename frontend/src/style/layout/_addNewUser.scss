@@ -1,0 +1,30 @@
+#newuser:target {
+  visibility: visible;
+}
+
+.newuser {
+  visibility: hidden;
+  &__container {
+    width: 50%;
+    height: 250px;
+  }
+  &__header {
+    display: block;
+    h1 {
+      font-size: 20px;
+    }
+  }
+  &__field {
+    position: relative;
+    &__addBtn {
+      width: 30%;
+    }
+    &__cancelBtn {
+      position: absolute;
+      left: 20px;
+      width: 30%;
+      background-color: $secondarycolor;
+      border: 1px solid $secondarycolor;
+    }
+  }
+}

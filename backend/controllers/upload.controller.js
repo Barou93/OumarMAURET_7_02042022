@@ -2,17 +2,19 @@ const models = require('../models');
 const { User } = models
 //const fs = require("fs");
 
+//${req.protocol}://${req.get('host')}
 
 module.exports.uploadProfil = async (req, res) => {
     const { id } = req.params
     try {
         console.log(req.file);
+        const directory = "profil";
 
         if (req.file == undefined) {
             return res.send(`Vous devez sélectionner un fichier.`);
         }
         await User.update({
-            picture: "../frontend/public/uploads/profil/" + req.file.filename,
+            picture: `./uploads/${directory}/${req.file.filename}`,
 
         }, { where: { id: id } }).then((userprofil) => {
             if (!userprofil) return res.status(404).json('File not found.')
