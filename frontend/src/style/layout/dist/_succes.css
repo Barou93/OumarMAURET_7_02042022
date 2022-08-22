@@ -1,0 +1,27 @@
+.success__container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+.success__container img {
+  width: 150px;
+  height: 150px;
+}
+.success__container__message {
+  padding-top: 50px;
+  text-align: center;
+}
+.success__container__message h1 {
+  font-size: 35px;
+}
+.success__container__message p {
+  font-size: 22px;
+}
+.success__container__message h1,
+.success__container__message p {
+  padding-top: 25px;
+}
+.success__container .success-btn {
+  padding-top: 30px;
+}

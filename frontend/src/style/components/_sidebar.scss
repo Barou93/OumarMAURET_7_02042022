@@ -19,7 +19,7 @@
   }
 }
 
-.sidebar_responsive > .sidebar_toggle {
+.sidebar_responsive>.sidebar_toggle {
   @include desktop-only {
     display: block;
   }
@@ -29,6 +29,7 @@
   @include desktop-only {
     display: none;
   }
+
   position: sticky;
   top: 50px;
   flex: none;
@@ -36,10 +37,11 @@
 
   height: auto;
   padding: 20px;
+
   h2 {
     font-size: 20px;
     font-weight: bold;
-    text-align: center;
+
     color: #000;
   }
 
@@ -55,6 +57,7 @@
       position: absolute;
       left: 0;
     }
+
     &__links {
       display: flex;
       align-items: center;
@@ -63,6 +66,7 @@
       color: rgba(0, 0, 0, 0.5);
       font-size: 15px;
       font-weight: bold;
+
       &:hover {
         text-decoration: underline;
       }

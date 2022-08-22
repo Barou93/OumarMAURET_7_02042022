@@ -1,5 +1,5 @@
 .header__dropdown {
-  display: block;
+
   position: fixed;
   top: 60px;
   right: 10px;
@@ -79,7 +79,6 @@
     ::before {
       @extend %settingicon;
       border-radius: 50%;
-
       background: url(../assets/icons/night-mode.png) center center / 15px 15px no-repeat,
         $iconbuttoncolor;
     }

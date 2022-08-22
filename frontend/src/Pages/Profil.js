@@ -1,14 +1,20 @@
 import React, { useContext } from 'react';
 
 import { UidContext } from '../Components/AppContext';
+
 import SigninForm from '../Components/Log/SigninForm';
+
+import ProfilItem from '../Profil/ProfilItem';
 const Profil = () => {
     const uid = useContext(UidContext);
+
     return (
         <div>
 
             {uid ? (
-                <h1>Profil</h1>
+                <>
+                    <ProfilItem />
+                </>
             ) : (
                 <SigninForm />
             )}

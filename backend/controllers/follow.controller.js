@@ -4,6 +4,7 @@ const models = require('../models');
 const { Follow, User } = models;
 
 
+
 module.exports.follow = async (req, res) => {
 
     try {
@@ -17,7 +18,7 @@ module.exports.follow = async (req, res) => {
 
 
 
-        const { followerId } = req.body
+        const { followerId } = req.body;
 
         const currentUser = await Follow.findOne({
             where: { followerId: follower.id, followingId: followerId }
@@ -39,7 +40,7 @@ module.exports.follow = async (req, res) => {
 
             }).then(() => {
                 return res.status(200).json({
-                    msg: `Vous venez de suivre ce collaborateur`,
+                    msg: `Vous venez de suivre ${followerId}`,
                 })
             }).catch(err => {
                 return res.status(400).json('Impossible de faire cette demande ' + err)
@@ -75,7 +76,7 @@ module.exports.unfollow = async (req, res) => {
         //If params id is the same as the id of the req.body 
         if (follower.id === req.body.followerId) {
 
-            return res.status(403).json("Vous pouvez pas vous désabonnez à vous même")
+            return res.status(403).json("Vous pouvez pas vous désabonnez à vous même");
         }
 
         //Check if the id of the req.body is not already available in db

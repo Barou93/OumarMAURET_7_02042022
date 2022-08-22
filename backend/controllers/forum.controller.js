@@ -191,9 +191,6 @@ module.exports.getAllGroups = async (req, res, next) => {
 
         if (allGroups) return res.status(200).json(allGroups)
 
-
-
-
     } catch (error) {
 
         return res.status(500).json(error.message)

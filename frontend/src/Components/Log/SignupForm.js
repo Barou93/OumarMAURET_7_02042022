@@ -1,8 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+//import Home from '../../Pages/Home';
+//import Profil from '../../Pages/Profil';
 import Logo from "../../style/assets/img/icon-left-font.png"
-import SigninForm from "./SigninForm"
+//import SigninForm from "./SigninForm"
 const SignupForm = () => {
     const [firstname, setFirstName] = useState("");
     const [lastname, setLastName] = useState("");
@@ -50,7 +52,7 @@ const SignupForm = () => {
             {formSubmit ? (
                 <>
                     <h1 className='success'>Votre compte a été créé avec succèss.Veuillez-vous connecter.</h1>
-                    <SigninForm />
+                    <Link to="/login">Connectez-vous </Link>
                 </>
             ) : (
                 <>

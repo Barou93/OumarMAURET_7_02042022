@@ -15,21 +15,26 @@ module.exports = (sequelize, DataTypes) => {
         through: models.Like,
         foreignKey: 'userId',
         otherKey: 'postId',
+
       });
 
       models.Post.belongsToMany(models.User, {
         through: models.Like,
         foreignKey: 'postId',
         otherKey: 'userId',
+
+
       });
 
       models.Like.belongsTo(models.User, {
         foreignKey: 'userId',
+        targetKey: 'id',
         as: 'user',
       });
 
       models.Like.belongsTo(models.Post, {
         foreignKey: 'postId',
+        targetKey: 'id',
         as: 'post',
       });
     }

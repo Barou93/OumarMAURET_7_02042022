@@ -7,6 +7,8 @@
     &__user {
       background-color: #fff;
 
+
+
       &__cover {
         max-width: 100%;
         height: 245px;
@@ -20,6 +22,8 @@
           height: 245px;
         }
       }
+
+
 
       &__picture {
         position: absolute;
@@ -52,6 +56,7 @@
         display: inline-block;
         border: 1px solid #fff;
         border-radius: 50%;
+        object-fit: cover;
         width: 150px;
         height: 150px;
       }
@@ -71,7 +76,7 @@
 
       &__title {
         position: absolute;
-        bottom: 100%;
+        bottom: 50%;
         left: 200px;
 
         @include tablette-small {
@@ -106,6 +111,8 @@
         border: 1px solid #e4e6eb;
         background-color: $iconbuttoncolor;
         color: #000;
+        text-align: center;
+        font-size: 15px;
         font-weight: bold;
         cursor: pointer;
 
@@ -113,6 +120,7 @@
           content: "";
           width: 15px;
           height: 15px;
+          margin-right: 8px;
           vertical-align: middle;
           display: inline-block;
           background: url(../assets/icons/edit.png) center / 100% 100% no-repeat;
@@ -120,11 +128,16 @@
       }
 
       &__follow {
-        position: absolute;
+
+
+        .followers {
+          display: flex;
+        }
 
         p {
           margin-top: 12px;
           font-size: 15px;
+          margin-right: 8px;
         }
 
         &__link {
@@ -135,7 +148,7 @@
             width: 22px;
             height: 22px;
             margin-top: 8px;
-            margin-left: -27px;
+            margin-left: 5px;
             background: url(../assets/icons/plus-doptions.png) center / 100% 100% no-repeat;
             z-index: 1;
           }
@@ -145,21 +158,72 @@
           height: 35px;
           width: 35px;
           border: 1px solid $iconbuttoncolor;
+          object-fit: cover;
           border-radius: 50%;
           box-shadow: 1px 2px 0.5px 1px rgba(170, 170, 170, 0.733);
 
-          &:last-child {
-            opacity: 0.4;
-          }
+
         }
       }
     }
+  }
+
+  &__username {
+    text-decoration: none;
+    color: #000;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:last-child {
+      margin-left: 8px;
+    }
+  }
+}
+
+.follow_btn,
+.followed_btn {
+  display: block;
+  border-radius: 25px;
+  border: 1px solid rgba(0, 0, 0, 0.68);
+  padding: 12px 15px;
+  color: #000;
+  background: transparent;
+  width: 120px;
+
+  &:hover {
+    background-color: rgba(244, 241, 241, 0.932);
+    border: 2px solid rgba(0, 0, 0, 0.68);
+
+  }
+
+  &::before {
+    content: "";
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 5px;
+    background: url(../assets/icons/plus.png) center/100% 100% no-repeat;
+  }
+
+}
+
+.followed_btn {
+  display: none;
+  background-color: transparent;
+  border: 1px solid $bodercolor;
+  color: #000;
+
+  &::before {
+    display: none;
+    content: "";
+    background: none;
   }
 }
 
 .profile__content {
   display: flex;
-  padding: 0 15px;
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
@@ -306,4 +370,47 @@
     background: none;
     display: inherit;
   }
+}
+
+textarea {
+  min-height: 80px;
+  border: 1px solid $iconbuttoncolor;
+  border-radius: 20px 20px 6px 20px;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  width: 100%;
+  margin-bottom: -6px;
+  font-size: 1.2rem;
+
+  &:focus {
+    border: 1px solid $buttonColor;
+    outline-color: $buttonColor;
+  }
+}
+
+.bio__button {
+  display: flex;
+  align-items: center;
+  flex-direction: row-reverse;
+  margin-top: 15px;
+
+  &__save-bio,
+  &__cancel-bio {
+    background: $buttonColor;
+    padding: 8px 8px;
+    color: #fff;
+
+  }
+
+  &__cancel-bio {
+    background: $iconbuttoncolor;
+    color: #000;
+    margin-right: 15px;
+  }
+}
+
+.members-date {
+  position: absolute;
+  right: 25px;
+  font-size: 15px;
 }

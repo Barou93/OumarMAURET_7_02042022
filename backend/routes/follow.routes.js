@@ -4,6 +4,7 @@ const followController = require('../controllers/follow.controller');
 
 
 router.patch('/follow/:id', followController.follow);
+//router.get('/follows', followController.getFollows);
 
 router.patch('/unfollow/:id', followController.unfollow);
 

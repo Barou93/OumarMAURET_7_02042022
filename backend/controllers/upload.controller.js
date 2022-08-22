@@ -2,7 +2,6 @@ const models = require('../models');
 const { User } = models
 //const fs = require("fs");
 
-//${req.protocol}://${req.get('host')}
 
 module.exports.uploadProfil = async (req, res) => {
     const { id } = req.params

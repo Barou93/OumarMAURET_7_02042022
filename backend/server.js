@@ -17,10 +17,8 @@ const messageRoutes = require('./routes/message.routes');
 const groupRoutes = require('./routes/group.routes');
 
 
-
 require('dotenv').config({ path: './config/.env' });
 const { checkUser, requireAuth } = require('./middleware/auth.middleware');
-
 
 
 const app = express();
@@ -52,19 +50,13 @@ app.get('/jwtid', requireAuth, (req, res) => {
 })
 
 //Use Socket
-
 app.use((req, res, next) => {
     res.io = io;
     next();
 })
 
 
-//Upload Images Path directory
-//app.use('../frontend/public/uploads/post', express.static(path.join(__dirname, './frontend/public/uploads/post')));
-//app.use('../frontend/public/uploads/profil', express.static(path.join(__dirname, './frontend/public/uploads/profil')));
-
 //Routes
-
 app.use('/api/user', userRoutes);
 app.use('/api/user', followRoutes);
 app.use('/api/post', postRoutes);
@@ -72,12 +64,6 @@ app.use('/api/post', likeRoutes);
 app.use('/api/post', commentRoutes);
 app.use('/api/message/', messageRoutes);
 app.use('/api/group/', groupRoutes);
-
-
-
-
-
-
 
 //Strating Server
 server.listen(process.env.PORT, () => {

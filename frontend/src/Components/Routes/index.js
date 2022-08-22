@@ -1,8 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-//import HomePage from "../../style/assets/icons/home.png";
-//import Chat from "../../style/assets/icons/chat.png";
-//import Group from "../../style/assets/icons/people.png";
 
 import Error from '../../Pages/Error';
 import Forum from '../../Pages/Forum';

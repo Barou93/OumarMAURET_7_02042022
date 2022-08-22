@@ -1,17 +1,22 @@
 const models = require('../models');
 
-const { User, Post } = models;
+const { User, Post, Like } = models;
 const jwtAuth = require('jsonwebtoken');
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
 
 
 module.exports.readPost = async (req, res, next) => {
     await Post.findAll({
-        attributes: { exclude: ['createdAt', 'updatedAt'] },
 
+        include: [
+
+            { model: Like, attributes: ["id", "PostId", "userId"] },
+        ],
         //Filter data in descending order: Highlight the latest publications
-        order: [['createdAt', 'DESC']]
+        order: [['createdAt', 'DESC']],
+
+
 
     }).then((posts) => res.status(200).json(posts))
         .catch((err) => {
@@ -32,12 +37,12 @@ module.exports.createPost = async (req, res, next) => {
         await User.findOne({ where: { id: userTokenId } })
             .then(async (user) => {
                 let attachmentURL;
-                const directory = "post";
+                //const directory = "profil";
 
                 //Check if the post contains an image
                 if (user !== null) {
                     if (req.file !== undefined) {
-                        attachmentURL = `${req.protocol}://${req.get('host')}../frontend/public/uploads/${directory}/${req.file.filename}`
+                        attachmentURL = `./uploads/profil/${req.file.filename}`
                     }
                     else {
                         attachmentURL = ""
@@ -58,7 +63,7 @@ module.exports.createPost = async (req, res, next) => {
                                 return res.status(201).json({ "Votre contenu vient d'être publier 😊": post.content })
 
                             })
-                            .catch(err => res.status(400).json({ 'Impossible de publier ce contenu 😥!': + err.message }))
+                            .catch(err => res.status(400).json({ err }))
                     }
 
                 }
@@ -74,11 +79,7 @@ module.exports.createPost = async (req, res, next) => {
 
 module.exports.readOnePost = async (req, res) => {
     const { id } = req.params;
-    await Post.findByPk(id, {
-        attributes: {
-            exclude: ['createdAt', 'updatedAt']
-        }
-    }).then((post) => res.status(200).json(post))
+    await Post.findByPk(id).then((post) => res.status(200).json(post))
         .catch((err) => {
             next(err)
         })
@@ -117,28 +118,24 @@ module.exports.updatePost = async (req, res, next) => {
 module.exports.deletePost = async (req, res, next) => {
 
     try {
-        //Get the id of the user in the cookie token
         const { id } = req.params;
         const token = jwtAuth.verify(req.cookies.jwt, process.env.TOKEN_SECRET);
         const user = await User.findByPk(token.id);
 
         const post = await Post.findOne({ where: { id: id } });
+        if (!post) return res.status(404).json('Utilisateur non trouvé.');
+        if (post.UserId !== user.id && user.isAdmin === false) return res.status(401).json('Vous ne pouvez pas supprimer cette publication.');
 
-        if (!post) return res.status(404).json('Utilisateur non trouvé.😥');
+        const filename = post.attachment.split('./uploads/profil/')[1];
+        console.log(filename)
+        //const filepath = path.resolve(`../frontend/public/uploads/profil/${filename}`)
+        //console.log(filename)
+        fs.unlink(`../frontend/public/uploads/profil/${filename}`, () => {
+            const result = Post.destroy({ where: { id: post.id } });
+            if (!result) res.status(404).json("Ce contenu n'existe pas !")
+            res.status(200).json('Ce contenu a été suppirmé avec succès !')
+        });
 
-        //Check if the Userid is != of the UserId of the comment to delete and if the user is not Admin 
-        if (post.UserId !== user.id && post.UserId !== user.isAdmin == false)
-            return res.status(401).json('Vous ne pouvez pas supprimer cette publication.😑');
-
-        const result = await Post.destroy({ where: { id: post.id }, truncate: { cascade: false } });
-
-        if (result === 0) throw new RequestError("Ce contenu n'existe pas 😥!")
-
-        const filename = post.attachment.split('../frontend/public/uploads/post/')[1];
-        const filepath = path.resolve(`../frontend/public/uploads/post/${filename}`)
-        await fs.unlink(filepath);
-
-        res.status(200).json('Ce contenu a été suppirmé avec succès 😊!')
     } catch (err) {
         next(err);
     }

@@ -38,7 +38,7 @@ module.exports = {
       picture: {
         allowNull: true,
         type: Sequelize.STRING,
-        defaultValue: '../frontend/public/uploads/profil/user.png'
+        defaultValue: './uploads/profil/user.png'
       },
       bio: {
         allowNull: true,

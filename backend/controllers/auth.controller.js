@@ -86,6 +86,7 @@ module.exports.signUp = async (req, res, next) => {
                     lastname,
                     email,
                     password: hash,
+
                 })
 
                 res.status(201).json({ user: user.toJSON() });

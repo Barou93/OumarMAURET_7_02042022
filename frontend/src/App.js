@@ -17,7 +17,7 @@ const App = () => {
         withCredentials: true,
       })
         .then((res) => {
-          console.log(res);
+          //console.log(res);
           setUid(res.data);
         })
         .catch((err) => console.log(err));
@@ -26,7 +26,7 @@ const App = () => {
 
     if (uid) dispatch(getUser(uid));
 
-  }, [uid]);
+  }, [uid, dispatch]);
 
   return (
     <UidContext.Provider value={uid}>

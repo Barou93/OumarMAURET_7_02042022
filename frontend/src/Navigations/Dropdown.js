@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import DropdownItem from "./DropdownItem";
-import User from ".././style/assets/img/user_8.jpg";
 import Logout from "../Components/Log/Logout";
+import { useSelector } from "react-redux";
 
 
 const Dropdown = () => {
     //const [activeProfilMenu, setActiveProfilMenu] = useState('dropdown');
+    const userData = useSelector((state) => state.userReducer);
 
     return (
 
@@ -14,16 +15,16 @@ const Dropdown = () => {
             <div className="profil">
                 <div className="profil__container">
                     <div className="profil__account">
-                        <a href="/profil">
-                            <img src={User}
+                        <Link to="/profil">
+                            <img src={userData.picture}
                                 className="user_profil"
                                 alt="profil User" />
-                        </a>
+                        </Link>
                     </div>
-                    <div className="profil__details">
-                        <span>Amadou Maïga</span>
+                    <Link to="/profil" className="profil__details">
+                        <span>{userData.firstname + " " + userData.lastname} </span>
                         <p>Voir votre profil</p>
-                    </div>
+                    </Link>
                 </div>
             </div>
             <hr />

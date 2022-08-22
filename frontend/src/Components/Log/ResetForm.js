@@ -27,7 +27,7 @@ const ResetForm = () => {
                 confirmNewPassword
             }
         }).then((res) => {
-            console.log(res);
+    
             if (res.data.errors) {
                 emailErr.innerHTML = res.data.errors.email;
                 newPassErr.innerHTML = res.data.errors.newPassword;

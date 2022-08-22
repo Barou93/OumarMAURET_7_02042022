@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 const SigninForm = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //const [message, setMessage] = useState(null);
+
 
 
     const handleLogin = (e) => {
@@ -14,7 +14,6 @@ const SigninForm = () => {
 
         const emailError = document.querySelector(".email.errors");
         const passwordError = document.querySelector(".password.errors");
-        console.log(emailError, passwordError)
         axios({
             method: "post",
             url: `${process.env.REACT_APP_API_URL}api/user/login`,

@@ -10,11 +10,10 @@
     position: relative;
   }
 
-  &:last-child {
-    margin-bottom: 0;
-  }
 
   &__header-avatar {
+    display: flex;
+    align-items: center;
     padding-left: 60px;
   }
 
@@ -43,7 +42,41 @@
 
   &__time {
     font-size: 12px;
+    margin-top: 5px;
     color: rgba(0, 0, 0, 0.38);
+  }
+
+  &__followersBtn,
+  &__followingBtn {
+    display: none;
+    margin-left: 10px;
+    margin-bottom: 15px;
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    color: $secondarycolor;
+    font-weight: bold;
+    cursor: pointer;
+
+    &::before {
+      content: "";
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      border: none;
+      background: url(../assets/icons/plus-red.png) center/100% 100% no-repeat;
+    }
+  }
+
+  &__followingBtn {
+    display: block;
+    color: #000;
+
+    &::before {
+
+      background: url(../assets/icons/check.svg) center/100% 100% no-repeat;
+    }
   }
 
   &__options {
@@ -113,26 +146,51 @@
     }
   }
 
-  &__like::before,
-  &__comments::before {
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 10px;
-    width: 25px;
-    height: 25px;
-    background: url(../assets/icons/coeur.png) center / 25px 25px no-repeat;
+  &__like {
+    display: flex;
+    align-items: center;
+    position: relative;
+    right: 5px;
+
+    &__heart__light,
+    &__heart__full {
+
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      width: 25px;
+      height: 25px;
+      background: url(../assets/icons/like.png) center / 100% 100% no-repeat;
+    }
+
+    &__heart__full {
+
+      background: url(../assets/icons/liked.png) center / 100% 100% no-repeat;
+
+    }
+
+    .liked {
+      color: $secondarycolor;
+      font-weight: bold;
+    }
+
   }
 
-  &__like:hover:before {
-    background: url(../assets/icons/coeur_full.png) center / 25px 25px no-repeat;
-  }
+  &__comments {
+    &__btn {
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 10px;
+      width: 25px;
+      height: 25px;
+      background: url(../assets/icons/comments.png) center / 100% 100% no-repeat;
+    }
 
-  &__comments::before {
-    background: url(../assets/icons/comments.png) center / 25px 25px no-repeat;
+
   }
 
   &__comments {
     margin-left: auto;
+    margin-top: 8px;
   }
 }

@@ -37,7 +37,6 @@
   &__form {
     background: #fff;
     margin-left: 50px;
-    padding: 25px;
     position: relative;
 
     width: 400px;
@@ -142,10 +141,9 @@
       font-size: 15px;
       margin-top: 30px;
 
-      &__signup {
+      button {
         border: none;
         background: transparent;
-        text-decoration: none;
         color: $primarycolor;
         font-weight: bold;
         font-size: 15px;
@@ -158,8 +156,7 @@
 .email,
 .password,
 .firstname,
-.lastname,
-.confirmpassword {
+.lastname {
   font-size: 12px;
   margin-top: 8px;
 

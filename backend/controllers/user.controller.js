@@ -31,7 +31,7 @@ module.exports.getAllUsers = async (req, res) => {
             },
         ],
         //Exclude some attributes like password, createdAt and updatedAt
-        attributes: { exclude: ['createdAt', 'updatedAt', 'password',] }
+        attributes: { exclude: ['password',] }
 
     }).then((users) => {
         res.status(200).json(users)
@@ -66,7 +66,7 @@ module.exports.userInfo = async (req, res, next) => {
         ],
 
         //Exclude some attributes like password, createdAt and updatedAt
-        attributes: { exclude: ['createdAt', 'updatedAt', 'password'] }
+        attributes: { exclude: ['password'] }
     })
         .then((user) => {
 

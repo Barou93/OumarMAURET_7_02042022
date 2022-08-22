@@ -1,13 +1,13 @@
 @import "./settings";
 @import "./base/reset";
 @import "./utils/mixin";
-@import "./pages/home";
 @import "./pages/signup";
 @import "./pages/signin";
 @import "./pages/resetpassword";
 @import "./components/header";
 @import "./layout/dropdown";
 @import "./layout/success";
+@import "./pages/home";
 @import "./components/modals";
 @import "./components/_card";
 @import "./components/sidebar";
@@ -24,3 +24,7 @@
 @import "./components/newForum";
 @import "./layout/addNewUser";
 @import "./layout/newmessage";
+@import "./components/editmodal";
+@import "./components/followersmodal";
+@import "./components/updateimg";
+@import "./components/modalsPopup";

@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 
 import { UidContext } from '../Components/AppContext';
 
-import Profil from '../Pages/Profil';
+import Home from '../Pages/Home';
 
 
 
@@ -25,7 +25,7 @@ const Navbar = (props) => {
                     </div>
                 </nav >
             ) : (
-                <Profil />
+                <Home />
             )}
         </>
     );
