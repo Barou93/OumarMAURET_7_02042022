@@ -1,25 +1,81 @@
 .edit__comment {
   &__container {
-    visibility: hidden;
     position: absolute;
     box-shadow: 0.5px 0.5px 1px 1px rgba(0, 0, 0, 0.36);
     display: flex;
     flex-direction: column;
-    left: calc(50% - 27px);
-    transform: translateY(-50%);
-    background: #fff;
-    width: 20%;
+    left: 58%;
+    margin-top: 10px;
+    border-radius: 8px;
+    width: 200px;
     height: auto;
     padding: 5px 8px;
     border-radius: 2px;
     background: #fff;
     z-index: 1;
   }
+
   &__content,
   &__delete__comment {
     text-decoration: none;
     margin-bottom: 20px;
     color: $textcolor;
     font-weight: bold;
+  }
+}
+
+.update__comment {
+  background: rgb(240, 242, 245);
+  border: 1px solid rgb(240, 242, 245);
+  border-radius: 0;
+  min-width: 400px;
+  font-size: .9rem;
+  min-height: 100px;
+
+
+
+  &:focus {
+    border: none !important;
+    outline: none !important;
+  }
+}
+
+.comment__btn__container {
+  display: flex;
+  align-items: center;
+}
+
+.comment__update__btn,
+.comment__cancel__btn {
+  margin-left: 15px;
+  border: 1px solid $secondarycolor;
+  border-radius: 12px;
+  background: $secondarycolor;
+  color: #fff;
+  padding: 5px;
+  width: 100px;
+
+  cursor: pointer;
+
+  &:hover {
+    background-color: #af3636;
+  }
+
+}
+
+.no-data {
+  opacity: .8;
+  color: rgba(240, 242, 245, 0.089);
+}
+
+.comment__cancel__btn {
+  margin-left: 15px;
+  border: 1px solid $postbordercolor;
+  background-color: $postbordercolor;
+  color: #000;
+
+  &:hover {
+    border: 1px solid #000;
+    background-color: $postbordercolor;
   }
 }

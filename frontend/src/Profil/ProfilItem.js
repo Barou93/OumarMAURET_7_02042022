@@ -4,7 +4,7 @@ import EditProfil from "./EditProfil";
 import UpdateBio from "./UpdateBio";
 import UpdateImg from "./UpdateImg";
 import CoverImg from '.././style/assets/img/groupomania-default-cover-picture.svg';
-import { dateParse } from "../Components/Utils";
+import { dateFromNow } from "../Components/Utils";
 
 import FollowerPopup from "./FollowerPopup";
 import FollowingPopup from "./FollowingPopup";
@@ -14,9 +14,6 @@ const ProfilItem = () => {
     //const usersData = useSelector((state) => state.usersReducer);
     const [openFollowerModal, setOpenFollowerModal] = useState(false);
     const [openFollowingModal, setOpenFollowingModal] = useState(false);
-
-
-
 
     return (
         <div className="profile__container">
@@ -61,7 +58,7 @@ const ProfilItem = () => {
                         <EditProfil />
                     </div>
                     <div className="members-date">
-                        <h2>Membre depuis le : {dateParse(userData.createdAt)} </h2>
+                        <h2>Membre depuis le : {dateFromNow(userData.createdAt)} </h2>
                     </div>
                 </div>
             </div>
@@ -73,15 +70,3 @@ const ProfilItem = () => {
 };
 
 export default ProfilItem;
-
-
-/*{/**{userData.followers ? userData.followers.map((user) => {
-                                    return (
-
-                                        <img key={user.id}
-                                            src={user.picture} alt="abonnés de l'utilisateur"
-                                            className="profile__container__user__follow__img" />
-                                    )
-                                    //return null;
-
-                                }) : null} }*/

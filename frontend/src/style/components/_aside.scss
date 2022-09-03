@@ -2,11 +2,13 @@
   @include tablette-only {
     display: none;
   }
+
   position: sticky;
-  top: 50px;
+  top: 0px;
   flex: none;
   width: 339px;
   height: 100%;
+
   &__container {
     padding: 5px;
 
@@ -14,23 +16,27 @@
       font-size: 17px;
       font-weight: bold;
       margin-top: 25px;
+      margin-left: 50px;
     }
   }
 
   &__user__icons {
-    position: absolute;
-    top: 25px;
+    //position: absolute;
+    margin-left: 50px;
   }
+
   &__followers {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     margin-top: 15px;
+
     p {
       margin-bottom: 10px;
       margin-top: 15px;
-      margin-left: 0;
+      margin-bottom: 20px;
+      margin-left: 40px;
       font-size: 15px;
       color: #000;
     }
@@ -44,6 +50,7 @@
       font-size: 15px;
       color: rgba(0, 0, 0, 0.68);
     }
+
     &__follow {
       float: left;
       margin: 10px 0;
@@ -55,15 +62,16 @@
       text-align: center;
       width: 30%;
       font-size: 15px;
+
       &::before {
         content: "";
         display: inline-block;
         width: 12px;
         height: 12px;
         margin-right: 2px;
-        background: url(../assets/icons/plus.png) center / 100% 100%
-          no-repeat;
+        background: url(../assets/icons/plus.png) center / 100% 100% no-repeat;
       }
+
       &:hover {
         background: rgba(216, 216, 216, 0.28);
         border: 2px solid;

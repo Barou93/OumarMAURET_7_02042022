@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       });
       models.Post.hasMany(models.Like, { foreignKey: "PostId", targetKey: "id" });
+      models.Post.hasMany(models.Comment, { foreignKey: "PostId", targetKey: "id" });
     }
   };
   Post.init({

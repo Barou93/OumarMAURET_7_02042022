@@ -1,14 +1,11 @@
-#options:target {
-  visibility: visible;
-}
-
 .post__options {
   position: relative;
+  cursor: pointer;
 }
 
 .edit__post {
   &__container {
-    visibility: hidden;
+
     position: absolute;
     display: flex;
     flex-direction: column;
@@ -17,20 +14,29 @@
     border-radius: 2px;
     background: #fff;
     margin-top: 10px;
-    width: 50%;
+
     height: 100%;
-    padding: 20px 15px;
+    padding: 20px 8px;
     box-shadow: 0.5px 0.5px 1px 1px rgba(0, 0, 0, 0.36);
   }
 }
 
 .edit__post__content,
 .delete__post {
-  text-decoration: none;
+
   margin-bottom: 20px;
   color: rgba(0, 0, 0, 0.9);
-  font-size: 15px;
+  font-size: 12px;
   font-weight: bold;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(216, 216, 216, 0.28);
+    padding: 2px;
+
+  }
 
   &::before {
     content: "";
@@ -41,6 +47,8 @@
     margin-right: 10px;
     background: url(../assets/icons/edit.png) center / contain no-repeat;
   }
+
+
 }
 
 .delete__post {

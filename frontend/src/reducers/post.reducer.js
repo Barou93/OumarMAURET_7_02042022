@@ -1,9 +1,6 @@
-import { GET_POSTS, LIKE_POST, UNLIKE_POST } from "../actions/post.actions";
+import { DELETE_COMMENT, DELETE_POST, EDIT_COMMENT, GET_POSTS, LIKE_POST, UNLIKE_POST, UPDATE_POST } from "../actions/post.actions";
 
-const initialState = {
-
-
-};
+const initialState = {};
 
 
 
@@ -30,6 +27,35 @@ export default function postReducers(state = initialState, action) {
                 }
                 return post
             });
+        case UPDATE_POST:
+            return state.map((post) => {
+                if (post.id === action.payload.id) {
+                    return {
+                        ...post,
+                        content: action.payload.content
+                    }
+                } else return post
+            })
+        case DELETE_POST:
+            return state.filter((post) => post.id !== action.payload.id);
+
+        case EDIT_COMMENT:
+            return state.map((post) => post.id === action.payload.postId ? {
+                ...post,
+                Comments: post.Comments.map((comment) => comment.id === action.payload.id && comment.userId === action.payload.userId ? {
+                    ...comment,
+                    comments: action.payload.comments
+
+                } : comment)
+
+            } : post);
+        case DELETE_COMMENT:
+            return state.map((post) => post.id === action.payload.postId ? {
+                ...post,
+                Comments: post.Comments.filter((comment) => comment.id !== action.payload.id)
+
+            } : post)
+
 
         default:
             return state

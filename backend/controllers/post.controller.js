@@ -1,6 +1,6 @@
 const models = require('../models');
 
-const { User, Post, Like } = models;
+const { User, Post, Like, Comment } = models;
 const jwtAuth = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
@@ -12,6 +12,7 @@ module.exports.readPost = async (req, res, next) => {
         include: [
 
             { model: Like, attributes: ["id", "PostId", "userId"] },
+            { model: Comment, attributes: ["id", "postId", "userId", "comments", "createdAt", "updatedAt"] }
         ],
         //Filter data in descending order: Highlight the latest publications
         order: [['createdAt', 'DESC']],
@@ -93,7 +94,7 @@ module.exports.updatePost = async (req, res, next) => {
     const userId = decoded.id;
 
     const { id } = req.params;
-    const { body } = req;
+    const { content } = req.body;
 
 
     const user = await User.findByPk(userId);
@@ -106,7 +107,7 @@ module.exports.updatePost = async (req, res, next) => {
             if (post.UserId !== user.id && post.UserId !== user.isAdmin == false)
                 return res.status(401).json('Vous ne pouvez pas modifier cette publication.😑')
 
-            post.content = body.content;
+            post.content = content;
             post.save()
                 .then(() => res.status(201).json(post))
                 .catch(err => res.status(401).json({ err }))
@@ -128,8 +129,7 @@ module.exports.deletePost = async (req, res, next) => {
 
         const filename = post.attachment.split('./uploads/profil/')[1];
         console.log(filename)
-        //const filepath = path.resolve(`../frontend/public/uploads/profil/${filename}`)
-        //console.log(filename)
+
         fs.unlink(`../frontend/public/uploads/profil/${filename}`, () => {
             const result = Post.destroy({ where: { id: post.id } });
             if (!result) res.status(404).json("Ce contenu n'existe pas !")

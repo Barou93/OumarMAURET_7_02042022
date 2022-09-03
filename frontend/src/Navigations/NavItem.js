@@ -11,7 +11,7 @@ const NavItem = () => {
     const [open, setOpen] = useState(false);
     const [openInfos, setOpenInfos] = useState(false);
 
-    const userData = useSelector((state) => state.userReducer)
+    const userData = useSelector((state) => state.userReducer);
 
 
     return (

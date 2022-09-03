@@ -1,6 +1,5 @@
 .card__comments__newcomment {
   display: flex;
-  align-items: center;
   position: relative;
   padding: 10px;
 }
@@ -14,26 +13,60 @@
 
 .card__comments__allcomments {
   display: flex;
-  align-items: center;
   padding: 10px;
   margin-bottom: 5px;
 
-  p {
-    margin-left: 10px;
-    background: #f0f2f5;
-    padding: 15px;
-    border-radius: 15px;
-    font-size: 15px;
+
+}
+
+.comment__message {
+
+  display: flex;
+
+  justify-content: space-between;
+  margin-left: 10px;
+  background: #f0f2f5;
+  padding: 12px;
+  border-radius: 15px;
+  font-size: 13px;
+  width: 100%;
+
+  &__container {
+    display: flex;
+    flex-direction: column;
   }
+
+  &__name {
+    text-decoration: none;
+    color: #000;
+    font-size: 11px;
+    font-weight: normal;
+
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__content {
+    margin-top: 5px;
+    margin-bottom: 0 !important;
+  }
+
+  span {
+    font-size: 8px;
+  }
+
 }
 
 .edit__comment {
   position: relative;
   display: inline-block;
-  height: 15px;
-  width: 15px;
+  height: 10px;
+  width: 10px;
   vertical-align: middle;
   margin-left: 8px;
+
   padding-left: 15px;
   opacity: 1;
   background: url(../assets/icons/plus-doptions.png) center / contain no-repeat;
@@ -58,13 +91,44 @@
   }
 }
 
+.comment__form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+
+  &__submit {
+    width: 80px;
+    border: 1px solid $secondarycolor;
+    border-radius: 12px;
+    background: $secondarycolor;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+    margin-left: 15px;
+
+    &:hover {
+      background-color: #af3636;
+    }
+  }
+
+  &__infos {
+    display: flex;
+
+    span {
+      font-size: 8px;
+    }
+
+  }
+
+}
+
 .card__comments__input {
   margin-left: 10px;
-  width: calc(100% - 50px);
-  border: 1px solid #f0f2f5;
+  width: 100%;
+  border: 1px solid #8e8e8f;
   border-radius: 12px;
   padding: 8px;
-  background: #f0f2f5;
   outline: none;
 
   &::placeholder {

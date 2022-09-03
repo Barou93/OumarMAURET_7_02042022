@@ -1,13 +1,29 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePost } from '../../actions/post.actions';
+
 import FollowHandler from '../../Profil/FollowHandler';
-import { dateParse, isEmpty } from '../Utils';
+import { dateFromNow, isEmpty } from '../Utils';
+import DeleteCard from './DeleteCard';
 import LikeButton from './LikeButton';
+import PostComments from './PostComments';
 
 const Card = ({ post }) => {
     const [isLoading, setIsLoading] = useState(true);
+    const [isUpdated, setIsupdated] = useState(false);
+    const [textUpdate, setTextUpdate] = useState(null);
+    const [showComments, setShowComments] = useState(false);
+    const [postOption, setPostOption] = useState(false);
     const usersData = useSelector((state) => state.usersReducer);
     const userData = useSelector((state) => state.userReducer);
+    const dispatch = useDispatch();
+    const updateContent = () => {
+        if (textUpdate) {
+            dispatch(updatePost(post.id, textUpdate))
+        }
+        setIsupdated(false)
+
+    }
 
     useEffect(() => {
         !isEmpty(usersData[0]) && setIsLoading(false);
@@ -47,21 +63,54 @@ const Card = ({ post }) => {
                                             }
 
                                             ).join('')
-
-
                                         }
 
                                     </a>
                                     <div className="card__time">
-                                        {dateParse(post.createdAt)}
+                                        {dateFromNow(post.createdAt)}
                                     </div>
                                 </div>
                                 {post.UserId !== userData.id && <FollowHandler followerId={post.UserId} type={"card"} />}
-                                <span id='options' className="card__options post_options"></span>
+                                <span
+                                    id='options'
+                                    onClick={() => setPostOption(!postOption)}
+                                    className="card__options post_options"></span>
+                                <>
+
+                                    {userData.id === post.UserId && postOption &&
+                                        (
+                                            <div id="options" className="edit__post__container">
+                                                <span
+
+                                                    className="edit__post__content"
+                                                    onClick={() => setIsupdated(!isUpdated)}
+
+                                                >Modifier la publication</span>
+                                                <DeleteCard id={post.id} />
+                                            </div>
+                                        )}
+                                </>
+
                             </header>
                             <div className="card__body">
                                 <div className="card__content">
-                                    <p>{post.content} </p>
+                                    {isUpdated === false && <p>{post.content} </p>}
+                                    {isUpdated &&
+                                        (
+                                            <>
+                                                <textarea
+                                                    defaultValue={post.content}
+                                                    onChange={(e) => setTextUpdate(e.target.value)}
+                                                />
+                                                <button
+                                                    onClick={updateContent}
+
+                                                >Enregistrer</button>
+                                            </>
+
+                                        )
+
+                                    }
                                 </div>
                                 <div className="card__img">
                                     <a href="/post/img">
@@ -74,10 +123,12 @@ const Card = ({ post }) => {
                                 </div>
                                 <div className="card__reaction">
                                     <span className="card__likereaction">
-                                        {post.likes ? post.likes.length : ""}
+                                        {post.Likes ? post.Likes.length : ""}
                                     </span>
-                                    <span className="card__commentslength">
-                                        {post.comments ? post.comments.length : " "}
+                                    <span
+                                        onClick={() => setShowComments(!showComments)}
+                                        className="card__commentslength">
+                                        {post.Comments ? post.Comments.length + " " + "commentaires" : " "}
                                     </span>
                                 </div>
                                 <div className="card__interactions">
@@ -89,16 +140,18 @@ const Card = ({ post }) => {
 
                                     <a href="#comments"
                                         onClick={(e) => {
-                                            e.preventDefault()
+                                            e.preventDefault();
+                                            setShowComments(!showComments)
                                         }}
 
                                         className="card__comments">
                                         <span className="card__comments__btn"></span>
                                         <span>
-                                            {post.comments ? post.comments.length : 0 + " " + "commentaires"}
+                                            {post.Comments ? post.Comments.length + " " + "commentaires" : 0 + " " + "commentaires"}
                                         </span>
                                     </a>
                                 </div>
+                                {showComments && <PostComments post={post} />}
                             </div>
                         </article>
                     </main>

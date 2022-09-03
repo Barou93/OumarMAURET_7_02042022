@@ -86,7 +86,7 @@ module.exports.editCommentPost = async (req, res, next) => {
                 if (!comment) return res.status(404).json('Ce commentaire est indisponible.')
 
                 //Check if the Userid is != of the UserId of the comment to delete and if the user is not Admin 
-                if (comment.UserId !== user.id && comment.UserId !== user.isAdmin == false)
+                if (comment.userId !== user.id && comment.userId === user.isAdmin === false)
                     return res.status(401).json('Impossible de modifier ce commentaire.')
 
                 Comment.update({ comments: comments }, {
@@ -132,7 +132,7 @@ module.exports.deleteCommentPost = async (req, res) => {
             if (!comment) return res.status(404).json('Ce commentaire est indisponible.')
 
             //Check if the Userid is != of the UserId of the comment to delete and if the user is not Admin 
-            if (comment.UserId !== user.id && comment.UserId !== user.isAdmin == false)
+            if (comment.UserId !== user.id && user.isAdmin === false)
                 return res.status(401).json('Impossible de supprimer ce commentaire.')
 
             Comment.destroy({ where: { id: id } })

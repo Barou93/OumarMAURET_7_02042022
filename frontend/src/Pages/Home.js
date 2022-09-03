@@ -1,5 +1,6 @@
 import React from 'react';
 import Feed from '../Components/Feed';
+import Aside from '../Components/Post/Aside';
 import Sidebar from '../Components/Post/Sidebar';
 
 
@@ -9,6 +10,7 @@ const Home = () => {
             <div className="container contain">
                 <Sidebar />
                 <Feed />
+                <Aside />
             </div>
 
         </div>

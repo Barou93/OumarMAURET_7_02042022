@@ -55,7 +55,6 @@ module.exports.userInfo = async (req, res, next) => {
                 model: User,
                 as: 'followers',
                 attributes: { exclude: ['password', 'isAdmin'] }
-
             },
             {
                 model: User,

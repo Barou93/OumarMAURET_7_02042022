@@ -86,6 +86,7 @@
     display: inline-block;
     width: 20px;
     height: 20px;
+    cursor: pointer;
     background: url(../assets/icons/plus-doptions.png) center / contain no-repeat;
   }
 
@@ -99,7 +100,7 @@
     .fullwidth {
       display: block;
       object-fit: cover;
-      height: 500px;
+
       margin-left: -10px;
       margin-right: -10px;
       width: calc(100% + 20px);
@@ -112,6 +113,7 @@
     align-items: center;
     padding: 5px;
     font-size: 15px;
+    font-weight: normal;
 
     a {
       text-decoration: none;
@@ -123,14 +125,35 @@
     }
   }
 
-  &__likereaction::before {
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    margin-right: 8px;
-    width: 25px;
-    height: 25px;
-    background: url(../assets/icons/heart.png) center / 25px 25px no-repeat;
+  &__likereaction {
+    cursor: pointer;
+    font-weight: normal;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+
+    &::before {
+      content: "";
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+      width: 35px;
+      height: 35px;
+
+      background: url(../assets/icons/heart-liked.svg) center / 25px 25px no-repeat;
+    }
+  }
+
+
+  &__commentslength {
+    cursor: pointer;
+    font-weight: normal;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   &__interactions {
