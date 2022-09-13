@@ -1,11 +1,20 @@
 /*************Post MODAL************/
 
-#modal_btn:target {
-  visibility: visible;
+.div-over {
+  overflow-y: auto;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+
+}
+
+.wrapper__container {
+  position: relative;
 }
 
 .main__post__modal {
-  visibility: hidden;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -52,7 +61,7 @@
     h2 {
       font-size: 20px;
       font-weight: bold;
-      color: $textcolor;
+
     }
   }
 
@@ -70,21 +79,18 @@
 
   &__userinfos {
     display: flex;
-    position: fixed;
+
     left: 0;
     margin-top: -18px;
-    justify-content: center;
-    align-items: center;
-
     padding: 15px;
 
     p {
-      margin-left: 15px;
+      margin-left: 10px;
       font-weight: bold;
+      font-size: 12px;
     }
 
     .username {
-      right: 0;
       border-radius: 50%;
       width: 40px;
       height: 40px;
@@ -98,14 +104,23 @@
     word-break: break-word;
     margin-top: 0;
     margin-bottom: 0;
+    max-height: 250px;
+    min-height: 100px;
+
 
     &__usertext {
       position: absolute;
       overflow-y: hidden;
       top: 10rem;
       color: #65676b;
+      padding: 20px;
+
+
     }
+
   }
+
+
 
   &__attachment {
     display: flex;
@@ -125,12 +140,19 @@
       font-weight: bold;
     }
 
+
+
     &__addmedia {
       display: inline-block;
       width: 35px;
       height: 35px;
       cursor: pointer;
       background: url(../assets/icons/upload.png) center / contain no-repeat;
+    }
+
+    .new__post {
+      margin-top: 11px;
+      margin-left: 8px;
     }
 
     &__postbtn {
@@ -141,18 +163,20 @@
       font-size: 15px;
       font-weight: bold;
       color: rgba(0, 0, 0, 0.4);
+      cursor: not-allowed;
     }
 
     .active {
       //visibility: hidden;
       background: $secondarycolor;
       color: white;
+      cursor: pointer;
     }
   }
 
+
+
   &__img {
-    //visibility: hidden;
-    //display: none;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,22 +184,33 @@
     border-radius: 5px;
     max-width: 100%;
     padding: 10px;
+    margin-top: 50px;
 
-    &::after {
-      content: "";
-      position: fixed;
-      top: 20%;
-      right: 10px;
-      margin-right: 25px;
-      margin-top: 150px;
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      border: 1px solid #fff;
-      cursor: pointer;
-      background: url(../assets/icons/signe-de-la-croix.png) center/15px 15px no-repeat,
-        #e4e6eb;
+    &__closebtn {
+      display: flex;
+      padding: 0.4rem;
+      position: absolute;
+      right: 0.9rem;
+      top: 10rem;
+      z-index: 4;
     }
+
+    &__close {
+
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      border: 1px solid #000;
+      cursor: pointer;
+      background: url(../assets/icons/signe-de-la-croix-white.png) center/10px 10px no-repeat,
+        #000;
+      opacity: .8;
+
+      &:hover {
+        opacity: 1;
+      }
+    }
+
 
     img {
       width: 100%;
@@ -183,4 +218,12 @@
       border-radius: 5px;
     }
   }
+}
+
+[contenteditable]:focus {
+  outline: 0px solid transparent;
+}
+
+[placeholder]:empty:before {
+  content: attr(placeholder)
 }

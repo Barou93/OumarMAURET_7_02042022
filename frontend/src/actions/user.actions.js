@@ -5,10 +5,10 @@ export const UPDATE_BIO = "UPDATE_BIO";
 export const FOLLOW_USER = "FOLLOW_USER";
 export const UNFOLLOW_USER = "UNFOLLOW_USER";
 
-export const getUser = (uid) => {
+export const getUser = (id) => {
     return (dispatch) => {
         return axios
-            .get(`${process.env.REACT_APP_API_URL}api/user/${uid}`)
+            .get(`${process.env.REACT_APP_API_URL}api/user/${id}`)
             .then((res) => {
                 dispatch({ type: GET_USER, payload: res.data })
             })

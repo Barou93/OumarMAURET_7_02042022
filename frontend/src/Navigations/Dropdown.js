@@ -15,13 +15,13 @@ const Dropdown = () => {
             <div className="profil">
                 <div className="profil__container">
                     <div className="profil__account">
-                        <Link to="/profil">
+                        <Link to={`/profil`}>
                             <img src={userData.picture}
                                 className="user_profil"
                                 alt="profil User" />
                         </Link>
                     </div>
-                    <Link to="/profil" className="profil__details">
+                    <Link exact='true' to={`/${userData.id}`} className="profil__details">
                         <span>{userData.firstname + " " + userData.lastname} </span>
                         <p>Voir votre profil</p>
                     </Link>

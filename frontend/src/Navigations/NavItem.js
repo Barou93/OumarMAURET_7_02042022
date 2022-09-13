@@ -14,6 +14,7 @@ const NavItem = () => {
     const userData = useSelector((state) => state.userReducer);
 
 
+
     return (
         <>
             <div className="header__menu">
@@ -31,7 +32,7 @@ const NavItem = () => {
                 </Link>
             </div>
             <NavIcon>
-                <Link to="/profil" className="header__user__infos">
+                <Link exact="true" to={`/${userData.id}`} className="header__user__infos">
                     <img src={userData.picture} className="header__account" alt="profil user" />
                     <span className="username">{userData.firstname + "  " + userData.lastname}</span>
                 </Link>

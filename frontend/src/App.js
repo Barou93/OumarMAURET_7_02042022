@@ -4,9 +4,11 @@ import { UidContext } from "./Components/AppContext";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getUser } from "./actions/user.actions";
+//import { useParams } from "react-router-dom";
 
 const App = () => {
   const [uid, setUid] = useState(null);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -17,7 +19,7 @@ const App = () => {
         withCredentials: true,
       })
         .then((res) => {
-          //console.log(res);
+
           setUid(res.data);
         })
         .catch((err) => console.log(err));
@@ -25,6 +27,7 @@ const App = () => {
     fecthToken();
 
     if (uid) dispatch(getUser(uid));
+
 
   }, [uid, dispatch]);
 

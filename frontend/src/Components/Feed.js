@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getPosts } from '../actions/post.actions';
 import Card from './Post/Card';
+import NewPostForm from './Post/NewPostForm';
 import { isEmpty } from './Utils';
 
 const Feed = () => {
@@ -26,15 +27,19 @@ const Feed = () => {
         window.addEventListener('scroll', loadMore);
         return () => window.removeEventListener('scroll', loadMore);
 
-    }, [loadPost, dispatch])
+    }, [loadPost, count, dispatch])
     return (
-        <div>
-            {!isEmpty(posts[0]) &&
-                posts.map((post) => {
-                    return <Card post={post} key={post.id} />
-                })
-            }
-        </div>
+        <>
+            <main className="main">
+
+                <NewPostForm />
+                {!isEmpty(posts[0]) &&
+                    posts.map((post) => {
+                        return <Card post={post} key={post.id} />
+                    })
+                }
+            </main>
+        </>
     );
 };
 

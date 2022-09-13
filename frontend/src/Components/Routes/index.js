@@ -18,6 +18,7 @@ import Logout from '../Log/Logout';
 
 
 const index = () => {
+
     return (
 
         <Router>
@@ -26,7 +27,7 @@ const index = () => {
             </Navbar>
             <Routes>
                 <Route exact path='/' element={<Home />} />
-                <Route path='/profil' element={<Profil />} />
+                <Route exact path='/:id' element={<Profil />} />
                 <Route path='/messages' element={<Message />} />
                 <Route path='/forums' element={<Forum />} />
                 <Route path='/login' element={<SigninForm />} />

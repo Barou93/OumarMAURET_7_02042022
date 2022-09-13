@@ -16,7 +16,7 @@ const Modal = ({ open, children }) => {
                             // do not close modal if anything inside modal content is clicked
                             e.stopPropagation();
                         }}
-                        className="modal followers__modal__popup">
+                        className="modal">
                         {children}
                     </div>
                 </div>

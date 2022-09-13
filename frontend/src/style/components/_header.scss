@@ -194,6 +194,7 @@ body {
   &__account {
     @extend %iconbuttonContain;
     position: absolute;
+    object-fit: cover;
     right: 20%;
     top: 10px;
   }

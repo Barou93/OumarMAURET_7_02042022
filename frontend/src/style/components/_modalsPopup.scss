@@ -20,6 +20,7 @@
       outline: 0;
       display: flex;
       align-items: center;
+
   }
 
   .modal {
@@ -29,8 +30,9 @@
       margin: auto;
       border-radius: 5px;
       max-width: 500px;
-      width: 80%;
+      width: 100%;
       padding: 1rem;
+
   }
 
   .modal-header {

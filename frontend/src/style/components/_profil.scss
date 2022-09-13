@@ -373,19 +373,19 @@
 }
 
 textarea {
-  min-height: 80px;
-  border: 1px solid $iconbuttoncolor;
-  border-radius: 20px 20px 6px 20px;
+  min-height: 60px;
+  border: none;
   padding: 10px 20px;
+  font-family: $Roboto1;
   font-size: 1.1rem;
   width: 100%;
   margin-bottom: -6px;
   font-size: 1.2rem;
   resize: none;
 
+
   &:focus {
-    border: 1px solid $buttonColor;
-    outline-color: $buttonColor;
+    outline: none;
   }
 }
 

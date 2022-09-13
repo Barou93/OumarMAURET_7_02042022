@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { isEmpty } from '../Utils';
 
 const Sidebar = () => {
@@ -22,12 +23,12 @@ const Sidebar = () => {
                             if (user.id !== userData.id) {
                                 return (
                                     <>
-                                        <div className="sidebar__members">
-                                            <a key={user.id} href="/profil/id" className="sidebar__members__links online">
+                                        <div key={user.id} className="sidebar__members">
+                                            <Link exact to={`/${user.id}`} className="sidebar__members__links online">
                                                 <img src={user.picture} alt="Profil membres de l'entreprise"
                                                     className="sidebar__members__icons" />
                                                 <p>{user.firstname + " " + user.lastname} </p>
-                                            </a>
+                                            </Link>
                                         </div>
                                     </>
                                 )

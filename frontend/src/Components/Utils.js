@@ -32,10 +32,10 @@ export const dateFromNow = (fromDate) => {
         //requiredDiffrentDays = Math.floor(diffDays / 360) == 1 ? `${Math.floor(diffDays / 365)} year ago` : `${Math.floor(diffDays / 365)} years ago`
     } else if (diffDays >= 30) {
         //requiredDiffrentDays = Math.floor(diffDays / 30) == 1 ? `${Math.floor(diffDays / 30)} month ago` : `${Math.floor(diffDays / 30)} months ago`
-        requiredDiffrentDays = `${DAYS_OF_WEEK[day]}/${MONTHS_OF_YEAR[month]} /${years} ${""}  ${hours} : ${minutes}`
+        requiredDiffrentDays = `${day}${" "}${MONTHS_OF_YEAR[month]},${years} ${""}${hours}:${minutes}`
     } else if (diffDays < 30) {
         //requiredDiffrentDays = (diffDays == 1 || diffDays == 0) ? `${diffDays} jours` : `${diffDays} jours`
-        requiredDiffrentDays = `${day}${" "}${MONTHS_OF_YEAR[month]}, ${" "} ${hours}:${minutes}`
+        requiredDiffrentDays = `${day}${" "}${MONTHS_OF_YEAR[month]}, ${" "}${hours}:${minutes}`
     }
 
     return requiredDiffrentDays;
@@ -51,3 +51,4 @@ export const isEmpty = (value) => {
         (typeof value === "string" && value.trim().length === 0)
     );
 };
+

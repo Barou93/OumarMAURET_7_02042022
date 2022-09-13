@@ -13,11 +13,52 @@
   src: url("./assets/fonts/Poppins-Black.ttf");
 }
 
+@font-face {
+  font-family: "Roboto-font1";
+  src: url('./assets/fonts/Roboto-Regular.ttf');
+}
+
+@font-face {
+  font-family: "Roboto-font2";
+  src: url("./assets/fonts/Roboto-Bold.ttf");
+}
+
+@font-face {
+  font-family: "Roboto-font3";
+  src: url("./assets/fonts/Roboto-Black.ttf");
+}
+
+@font-face {
+  font-family: "Guidea-font1";
+  src: url('./assets/fonts/Gudea-Regular.ttf');
+}
+
+@font-face {
+  font-family: "Guidea-font2";
+  src: url('./assets/fonts/Gudea-Italic.ttf');
+}
+
+@font-face {
+  font-family: "Guidea-font3";
+  src: url('./assets/fonts/Gudea-Bold.ttf');
+}
+
+
+
 //Fonts
 
 $font-1: "font-1", sans-serif;
 $font-2: "font-2", sans-serif;
 $font-3: "font-3", sans-serif;
+$Roboto1: "Roboto-font1", sans-serif;
+$Roboto2: "Roboto-font2", sans-serif;
+$Roboto3: "Roboto-font3", sans-serif;
+$Guidea1 : "Guidea-font1",
+sans-serif;
+$Guidea2 : "Guidea-font2",
+sans-serif;
+$Guidea3 : "Guidea-font3",
+sans-serif;
 
 //Colors
 
