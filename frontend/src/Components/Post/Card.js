@@ -5,6 +5,7 @@ import { updatePost } from '../../actions/post.actions';
 
 import FollowHandler from '../../Profil/FollowHandler';
 import { dateFromNow, isEmpty } from '../Utils';
+import Activites from './Activites';
 import DeleteCard from './DeleteCard';
 import LikeButton from './LikeButton';
 
@@ -32,7 +33,9 @@ const Card = ({ post }) => {
     useEffect(() => {
         !isEmpty(usersData[0]) && setIsLoading(false);
 
-    }, [usersData])
+    }, [usersData]);
+
+
 
 
     return (
@@ -75,26 +78,28 @@ const Card = ({ post }) => {
                                     {dateFromNow(post.createdAt)}
                                 </div>
                             </div>
+                            {userData.id === post.UserId ? (
+                                <>
+                                    <span
+                                        id='options'
+                                        onClick={() => setPostOption(!postOption)}
+                                        className="card__options post_options"></span>
+
+                                    {userData.id === post.UserId && postOption &&
+                                        (
+                                            <div id="options" className="edit__post__container">
+                                                <span
+
+                                                    className="edit__post__content"
+                                                    onClick={() => setIsupdated(!isUpdated)}
+
+                                                >Modifier la publication</span>
+                                                <DeleteCard id={post.id} />
+                                            </div>
+                                        )}
+                                </>)
+                                : null}
                             {post.UserId !== userData.id && <FollowHandler followerId={post.UserId} type={"card"} />}
-                            <span
-                                id='options'
-                                onClick={() => setPostOption(!postOption)}
-                                className="card__options post_options"></span>
-                            <>
-
-                                {userData.id === post.UserId && postOption &&
-                                    (
-                                        <div id="options" className="edit__post__container">
-                                            <span
-
-                                                className="edit__post__content"
-                                                onClick={() => setIsupdated(!isUpdated)}
-
-                                            >Modifier la publication</span>
-                                            <DeleteCard id={post.id} />
-                                        </div>
-                                    )}
-                            </>
 
                         </header>
                         <div className="card__body">
@@ -164,6 +169,7 @@ const Card = ({ post }) => {
                             {showComments && <PostComments post={post} />}
                         </div>
                     </article>
+
 
                 </>
             )}

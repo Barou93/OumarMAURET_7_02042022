@@ -1,0 +1,20 @@
+.nofollower {
+    &__container {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    &__img {
+        img {
+            width: 200px;
+            height: 200px;
+        }
+    }
+
+    &__text {
+        h2 {
+            font-size: 15px;
+        }
+    }
+}

@@ -42,7 +42,7 @@ module.exports.requireAuth = (req, res, next) => {
             } else {
                 let user = await User.findByPk(decodedToken.id,);
                 res.locals.user = user
-                console.log(res.locals.user.id);
+                //console.log(res.locals.user.id);
                 next();
 
             }

@@ -37,7 +37,7 @@ const PostModal = ({ post }) => {
             if (postText) data.append('content', postText);
 
             //Vérify if file content a file picture 
-            if (postFile) data.append('file', postFile)
+            if (postFile) data.append('file', postFile);
 
             await dispatch(addPost(data));
             dispatch(getPosts())
@@ -53,7 +53,7 @@ const PostModal = ({ post }) => {
         setPostImg("");
     }
 
-    console.log(isLoaded)
+    //console.log(isLoaded)
     //console.log(postImg)
     return (
 
@@ -72,7 +72,7 @@ const PostModal = ({ post }) => {
                             className="main__post__modal__closebtn"></span>
                     </header>
                     <div className="main__post__modal__userinfos">
-                        <NavLink exact to={`/profil/${userData.id}`}>
+                        <NavLink exact={"true"} to={`/profil/${userData.id}`}>
                             <img src={userData.picture} alt="l'utilisateur qui va créer un post"
                                 className="username" />
                         </NavLink>
@@ -83,7 +83,7 @@ const PostModal = ({ post }) => {
                         <div
                             onInput={(e) => setPostText(e.currentTarget.textContent)}
                             className="main__post__content__usertext" data-gramm="false"
-                            contenteditable="true" placeholder={`De quoi souhaitez-vous discuter ?${" "}${userData.firstname}`}
+                            contentEditable="true" placeholder={`De quoi souhaitez-vous discuter ?${" "}${userData.firstname}`}
                             aria-placeholder={`De quoi souhaitez-vous discuter ?${" "}${userData.firstname}`}
                             aria-label="Éditeur de texte pour créer du contenu"
                             role="textbox" aria-multiline="true"

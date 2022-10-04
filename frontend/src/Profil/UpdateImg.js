@@ -23,7 +23,7 @@ const UpdateImg = () => {
         e.preventDefault();
         const data = new FormData();
 
-        data.append("file", file);
+        data.append("profil", file);
 
         dispatch(uploadPicture(data, userData.id));
     }
@@ -67,7 +67,7 @@ const UpdateImg = () => {
                                 <div className="input__file">
                                     <label htmlFor="file">Modifier l'image</label>
                                     <input type="file"
-                                        name="file"
+                                        name="profil"
                                         id="file"
                                         className="input-file"
                                         accept=".jpeg,  .jpg,  .png"

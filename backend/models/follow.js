@@ -13,6 +13,21 @@ module.exports = (sequelize, DataTypes) => {
       // define association hereMany
 
 
+
+      models.Follow.belongsTo(models.User, {
+        foreignKey: 'followerId',
+        as: 'following'
+
+      });
+
+      models.Follow.belongsTo(models.User, {
+        foreignKey: 'followingId',
+        as: 'follower'
+
+      });
+
+
+
     }
   };
   Follow.init({

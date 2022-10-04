@@ -34,19 +34,20 @@ module.exports.createPost = async (req, res, next) => {
     try {
 
         let { content } = req.body;
-        console.log(content);
+
         await User.findOne({ where: { id: userTokenId } })
             .then(async (user) => {
                 let attachmentURL;
-                //const directory = "profil";
 
                 //Check if the post contains an image
                 if (user !== null) {
                     if (req.file !== undefined) {
-                        attachmentURL = `./uploads/profil/${req.file.filename}`
+
+                        attachmentURL = `./uploads/post/${req.file.filename}`
                     }
                     else {
                         attachmentURL = ""
+
                     }
 
                     if ((content == "null" && attachmentURL == "null")) {
@@ -60,7 +61,6 @@ module.exports.createPost = async (req, res, next) => {
                             })
                             .then((post) => {
 
-                                console.log(post)
                                 return res.status(201).json({ "Votre contenu vient d'être publier 😊": post.content })
 
                             })
@@ -101,7 +101,7 @@ module.exports.updatePost = async (req, res, next) => {
 
     await Post.findByPk(id)
         .then((post) => {
-            if (!post) throw new UserError("Ce contenu n'existe pas !", 0);
+            if (!post) throw new UserError("Ce contenu n'existe pas !");
 
             //Check if the Userid is != of the UserId of the comment to delete and if the user is not Admin 
             if (post.UserId !== user.id && post.UserId !== user.isAdmin == false)
@@ -127,10 +127,10 @@ module.exports.deletePost = async (req, res, next) => {
         if (!post) return res.status(404).json('Utilisateur non trouvé.');
         if (post.UserId !== user.id && user.isAdmin === false) return res.status(401).json('Vous ne pouvez pas supprimer cette publication.');
 
-        const filename = post.attachment.split('./uploads/profil/')[1];
+        const filename = post.attachment.split('./uploads/post/')[1];
         console.log(filename)
 
-        fs.unlink(`../frontend/public/uploads/profil/${filename}`, () => {
+        fs.unlink(`../frontend/public/uploads/post/${filename}`, () => {
             const result = Post.destroy({ where: { id: post.id } });
             if (!result) res.status(404).json("Ce contenu n'existe pas !")
             res.status(200).json('Ce contenu a été suppirmé avec succès !')

@@ -7,29 +7,33 @@ const Follow = models.Follow;
 //Errors utils
 
 
-
-
 //Getting All user iNFOS
 module.exports.getAllUsers = async (req, res) => {
 
     //Select all user register in DB and print in the screen
+
     await User.findAll({
 
         //Get users followers/followings fields 
         include: [
             {
-                model: User,
-                as: 'followers',
-                attributes: { exclude: ['password', 'isAdmin'] }
-
+                model: Follow,
+                attributes: ["id", 'followerId', 'followingId', "createdAt", "updatedAt"],
+                require: true,
+                as: 'follower'
             },
             {
-                model: User,
-                as: 'followings',
-                attributes: { exclude: ['password', 'isAdmin'] }
-
+                model: Follow,
+                attributes: ["id", 'followerId', 'followingId', "createdAt", "updatedAt"],
+                require: true,
+                as: 'following'
             },
+
+
+
         ],
+
+        order: [['createdAt', 'ASC']],
         //Exclude some attributes like password, createdAt and updatedAt
         attributes: { exclude: ['password',] }
 
@@ -37,7 +41,7 @@ module.exports.getAllUsers = async (req, res) => {
         res.status(200).json(users)
     })
         .catch((err) => {
-            res.status(400).send(err);
+            res.status(400).json(err);
         })
 
 }
@@ -50,18 +54,22 @@ module.exports.userInfo = async (req, res, next) => {
     await User.findByPk(id, {
 
         //Get user followers/followings fields 
+
         include: [
             {
-                model: User,
-                as: 'followers',
-                attributes: { exclude: ['password', 'isAdmin'] }
+                model: Follow,
+                attributes: ['followerId', 'followingId', "createdAt", "updatedAt"],
+                require: false,
+                as: 'follower'
             },
             {
-                model: User,
-                as: 'followings',
-                attributes: { exclude: ['password', 'isAdmin'] }
-
+                model: Follow,
+                attributes: ['followerId', 'followingId', "createdAt", "updatedAt"],
+                require: false,
+                as: 'following'
             },
+
+
         ],
 
         //Exclude some attributes like password, createdAt and updatedAt
@@ -95,7 +103,7 @@ module.exports.UpdateUser = async (req, res, next) => {
             if (!userupdate)
                 res.status(401).json("Impossible de mettre à jour !")
 
-            if (userupdate !== user.id && userupdate !== user.isAdmin == false)
+            if (userupdate !== user.id && userupdate == !user.isAdmin)
                 return res.status(401).json('Impossible de modifier cet utlisateur.')
 
             if (userupdate === null) res.status(404).json("Cet utilisateur n'existe pas !")
@@ -122,7 +130,7 @@ module.exports.deleteUser = (req, res, next) => {
     User.destroy({ where: { id: id } })
 
         .then((userdelete) => {
-            if (userdelete !== user.id && user.isAdmin == false)
+            if (userdelete !== user.id && !user.isAdmin)
                 return res.status(401).json('Impossible de modifier cet utlisateur.')
 
             if (userdelete === 0) return res.status(404).json("Cet utilisateur n'existe pas !")

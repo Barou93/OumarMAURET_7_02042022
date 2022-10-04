@@ -19,6 +19,7 @@ router.put('/:id', userController.UpdateUser);
 router.delete('/:id', userController.deleteUser);
 
 //Upload file
-router.post('/:id/upload', upload.single('file'), uploadController.uploadProfil);
+router.post('/:id/upload', upload.single('profil'), uploadController.uploadProfil);
+router.post('/:id/upload/cover', upload.single('cover'), uploadController.uploadCoverProfil);
 
 module.exports = router;

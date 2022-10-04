@@ -12,7 +12,7 @@ const NewPostForm = () => {
 
     return (
         <div className='main__post'>
-            <Link exact to={`profil/${userData.id}`}>
+            <Link exact to={`/${userData.id}`}>
                 <img src={userData.picture}
                     alt="  créer un post"
                     className="main__post__usericon" />

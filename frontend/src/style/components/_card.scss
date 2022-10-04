@@ -50,7 +50,7 @@
 
   &__followersBtn,
   &__followingBtn {
-    display: none;
+
     margin-left: 10px;
     margin-bottom: 15px;
     background: transparent;
@@ -68,16 +68,21 @@
       margin-right: 5px;
       border: none;
       background: url(../assets/icons/plus-red.png) center/100% 100% no-repeat;
+
     }
   }
 
   &__followingBtn {
-    display: block;
+
     color: #000;
+    cursor: pointer;
 
     &::before {
-
-      background: url(../assets/icons/check.svg) center/100% 100% no-repeat;
+      width: 20px;
+      height: 20px;
+      margin-right: 3px;
+      margin-top: -5px;
+      background: url(../assets/icons/add-friend.png) center/100% 100% no-repeat;
     }
   }
 

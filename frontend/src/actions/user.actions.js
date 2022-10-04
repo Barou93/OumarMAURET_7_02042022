@@ -57,7 +57,8 @@ export const followUser = (followerId, followingId) => {
         return axios({
             method: 'patch',
             url: `${process.env.REACT_APP_API_URL}api/user/follow/${followerId}`,
-            data: { followerId: followingId }
+            data: { followerId: followingId },
+            withCredentials: true
         })
             .then((res) => {
 

@@ -11,7 +11,7 @@ import ProfilItem from '../Profil/ProfilItem';
 const Profil = () => {
     const uid = useContext(UidContext);
     const { id: userId } = useParams();
-    console.log(userId)
+
 
 
     return (

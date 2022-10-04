@@ -15,16 +15,22 @@ const imageFilter = (req, file, cb) => {
 };
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-        let directory;
-        directory = "profil" ? "profil" : "post",
+        let dir = `../frontend/public/uploads/` + file.fieldname;
+        if (file.fieldname === "profil") {
+            cb(null, dir);
+        }  else if (file.fieldname === "cover") {
+            cb(null, dir);
+        } else {
+            cb(null, `../frontend/public/uploads/post` )
+        }
 
-            cb(null, `../frontend/public/uploads/${directory}`);
     },
     filename: (req, file, cb) => {
         let extension = MIME_TYPES[file.mimetype];
         let fileName = "";
-        fileName = "profil" ? "profil" + "." + extension : file.originalname + "." + extension;
-        fileName = "post" ? "post" + "." + extension : file.originalname + "." + extension;
+
+        fileName = file.originalname + "." + extension;
+
         cb(null, `Groupomania_${Date.now()}_${fileName}`);
     },
 });

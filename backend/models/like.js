@@ -23,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'postId',
         otherKey: 'userId',
 
-
       });
 
       models.Like.belongsTo(models.User, {

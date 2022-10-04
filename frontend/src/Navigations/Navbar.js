@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 
 import { UidContext } from '../Components/AppContext';
 
@@ -14,12 +15,12 @@ const Navbar = (props) => {
                 <nav>
                     <div className="header">
                         <div className="header__container">
-                            <a href="/" className="header__img">
+                            <Link exact="true" to="/" className="header__img">
                                 <span className="search-icon"></span>
                                 <input type="text"
                                     className="header__input"
                                     placeholder='Rechercher sur Groupomania ' />
-                            </a>
+                            </Link>
                         </div>
                         {props.children}
                     </div>

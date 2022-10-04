@@ -40,6 +40,13 @@ module.exports = {
         type: Sequelize.STRING,
         defaultValue: './uploads/profil/user.png'
       },
+
+      coverPicture: {
+        allowNull: true,
+        type: Sequelize.STRING,
+        defaultValue: './uploads/profil/cover-picture.png'
+      },
+
       bio: {
         allowNull: true,
         type: Sequelize.STRING,

@@ -4,7 +4,6 @@ const models = require('../models');
 const { Follow, User } = models;
 
 
-
 module.exports.follow = async (req, res) => {
 
     try {
@@ -16,18 +15,16 @@ module.exports.follow = async (req, res) => {
         });
         console.log(follower.id);
 
-
-
         const { followerId } = req.body;
+        const followingId = follower.id
 
         const currentUser = await Follow.findOne({
-            where: { followerId: follower.id, followingId: followerId }
+            where: { followerId, followingId: followingId }
         })
 
 
         //If params id is the same as the id of the req.body 
         if (follower.id === req.body.followerId) {
-
             return res.status(403).json("Vous pouvez pas vous suivre")
         }
 
@@ -35,12 +32,13 @@ module.exports.follow = async (req, res) => {
 
         if (!currentUser) {
             await Follow.create({
-                followerId: follower.id,
-                followingId: req.body.followerId
+                followingId,
+                followerId: req.body.followerId,
 
             }).then(() => {
+
                 return res.status(200).json({
-                    msg: `Vous venez de suivre ${followerId}`,
+                    msg: ` vous venez de suivre ${followerId}`,
                 })
             }).catch(err => {
                 return res.status(400).json('Impossible de faire cette demande ' + err)

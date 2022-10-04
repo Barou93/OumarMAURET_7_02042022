@@ -20,16 +20,19 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'receiver'
       });
 
-      models.User.belongsToMany(models.User, {
+
+      models.User.hasMany(models.Follow, {
         foreignKey: 'followerId',
-        as: 'followers',
-        through: models.Follow
+        as: 'follower'
+
       });
-      models.User.belongsToMany(models.User, {
+
+      models.User.hasMany(models.Follow, {
         foreignKey: 'followingId',
-        as: 'followings',
-        through: models.Follow
+        as: 'following'
+
       });
+
 
       models.User.belongsToMany(models.Forum, {
         through: models.ForumMember,
@@ -59,6 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     email: DataTypes.STRING,
     password: DataTypes.STRING,
     picture: DataTypes.STRING,
+    coverPicture: DataTypes.STRING,
     bio: DataTypes.STRING,
     isAdmin: DataTypes.BOOLEAN
   }, {

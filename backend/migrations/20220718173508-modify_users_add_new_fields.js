@@ -1,31 +1,22 @@
 'use strict';
 
-
-
 module.exports = {
   async up(queryInterface, Sequelize) {
     return Promise.all([
       queryInterface.addColumn(
         'Users',
-        'followers', {
-        type: Sequelize.UUID,
+        'coverPicture', {
+        type: Sequelize.STRING,
         allowNull: true,
-      }
-      ),
-
-      queryInterface.addColumn(
-        'Users',
-        'following', {
-        type: Sequelize.UUID,
-        allowNull: true,
+        defaultValue: './uploads/profil/cover-picture.png'
       }
       ),
       queryInterface.addColumn(
         'Users',
         'isAdmin', {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
         allowNull: true,
+        defaultValue: false
       }
       ),
       queryInterface.addColumn(
@@ -47,14 +38,11 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-
     return Promise.all([
-      queryInterface.removeColumn('Users', 'followers'),
-      queryInterface.removeColumn('Users', 'following'),
+      queryInterface.removeColumn('Users', 'coverPicture'),
       queryInterface.removeColumn('Users', 'isAdmin'),
       queryInterface.removeColumn('Users', 'createdAt'),
       queryInterface.removeColumn('Users', 'updatedAt'),
     ])
-
   }
 };

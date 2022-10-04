@@ -32,7 +32,7 @@ const EditProfil = () => {
     const updatePicture = () => {
 
         const data = new FormData();
-        data.append('file', file);
+        data.append('profil', file);
 
         dispatch(uploadPicture(data, userData.id));
     }
@@ -72,10 +72,10 @@ const EditProfil = () => {
                         </button>
                     </div>
                     <div className="edit__modal__coverImg">
-                        <img src={CoverImg} alt="cover user" />
+                        <img src={userData.coverPicture} alt="cover user" />
                         <div className="cover__icons">
                             <label htmlFor="input-file-cover" className="cover__icons__update">
-                                < input className='input-file-cover' type="file" name="file" id="input-file-cover" />
+                                < input className='input-file-cover' type="file" name="cover" id="input-file-cover" />
                             </label>
                             <div className="cover__icons__delete"></div>
                         </div>
@@ -90,7 +90,7 @@ const EditProfil = () => {
                             <label htmlFor="input-file-profil" className="cover__icons__update profil">
                             </label>
                             < input type="file"
-                                name="file"
+                                name="profil"
                                 id="input-file-profil"
                                 accept='.jpg, .jpeg, .png'
                                 onChange={handlePreviewImage}

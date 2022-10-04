@@ -33,10 +33,94 @@
   position: sticky;
   top: 50px;
   flex: none;
-  width: 395px;
-
+  width: 295px;
   height: auto;
-  padding: 20px;
+
+  &__members__container {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  &__user__infos {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    margin-bottom: 20px;
+    border-radius: 12px;
+
+
+    &__cover__pic {
+      max-width: 330px;
+      height: 100%;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    &__profil__pic {
+      position: relative;
+      bottom: 60px;
+      max-width: 100px;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      height: 100%;
+
+      img {
+        width: 100%;
+        border-radius: 50%;
+      }
+    }
+
+    .userpseudo {
+      position: relative;
+      bottom: 50px;
+      font-size: 18px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #000;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+
+    &__follow {
+      width: 100%;
+      border-top: 2px solid $iconbuttoncolor;
+      display: flex;
+
+
+      &__followed {
+        border-right: 2px solid $iconbuttoncolor;
+        width: 50%;
+        height: 60px;
+        text-align: center;
+        padding: 12px;
+
+      }
+
+      &__follower {
+
+        text-align: center;
+        padding: 12px;
+        margin-left: 18px;
+
+      }
+
+      p {
+        font-size: 22px;
+        font-weight: bold;
+      }
+
+      span {
+        font-size: 12px;
+      }
+    }
+  }
 
   h2 {
     font-size: 20px;

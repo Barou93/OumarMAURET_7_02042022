@@ -56,7 +56,8 @@ module.exports.signUp = async (req, res, next) => {
             firstname: "",
             lastname: "",
             email: "",
-            password: "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial"
+            password: "Le mot de passe doit avoir 8 caractères et inclure 1 lettre majuscule, 1 chiffre et 1 caractère spécial",
+
         }
 
 
@@ -86,7 +87,6 @@ module.exports.signUp = async (req, res, next) => {
                     lastname,
                     email,
                     password: hash,
-
                 })
 
                 res.status(201).json({ user: user.toJSON() });
